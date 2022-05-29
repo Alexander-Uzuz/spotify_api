@@ -1,5 +1,9 @@
-import React, { useState } from "react";
+import { useState, useEffect } from "react";
 import { Menu, Avatar, Typography, Dropdown, MenuProps, Button } from "antd";
+import { useNavigate } from "react-router-dom";
+import { useAppDispatch, useAppSelector } from "core/redux/hooks";
+import {signInThunk} from 'modules/SignIn/SignInThunk';
+import { loginEndpoint } from "api/baseRequest";
 import AvatarImg from "assets/images/avatar.png";
 import ProfileArrow from "assets/icons/profile__arrow.svg";
 import './Header.scss';
@@ -20,9 +24,34 @@ const items: MenuProps["items"] = [
 const menu = <Menu items={items} />;
 
 export const HeaderComponent = (props: Props) => {
-  const [auth, setAuth] = useState(false);
   const [activeButton, setActiveButton] = useState<"left" | "right">("right");
   const [rotate, setRotate] = useState(false);
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+  const {user,error} = useAppSelector((state) => state.signIn);
+
+  useEffect(() => {
+    if(!error){
+      (async function() {
+        const token = window.localStorage.getItem("token");
+        const hash = window.location.hash;
+        window.location.hash = "";
+        if (!token && hash) {
+          const _token = hash.split("&")[0].split("=")[1];
+          window.localStorage.setItem("token", _token);
+          await dispatch(signInThunk(_token));
+          navigate("/home");
+        }
+        if (token) {
+          await dispatch(signInThunk(token));
+          navigate("/home");
+        }    
+   }());
+    }else{
+      localStorage.removeItem('token')
+    }
+  }, []);
+
 
   const handleButton = (direction: "left" | "right") => setActiveButton(direction);
   const handleRotate = () => setRotate(!rotate);
@@ -65,17 +94,17 @@ export const HeaderComponent = (props: Props) => {
           </div>
         </div>
         {
-          auth 
+          user.id
           ?
           <div className="profile__container">
           <Avatar
-            src={AvatarImg}
+            src={user.avatarUrl ? user.avatarUrl : AvatarImg}
             size={37}
             shape={"circle"}
             className="profile__avatar"
           />
           <Title className="profile_title" level={5}>
-            Александр
+            {user.username}
           </Title>
           <Dropdown overlay={menu} trigger={["click"]}>
             <img
@@ -87,7 +116,7 @@ export const HeaderComponent = (props: Props) => {
           </Dropdown>
         </div>
         :
-        <Button href="#" type="link" className="header__button-signIn">Войти</Button>
+        <Button href={loginEndpoint} type="link" className="header__button-signIn">Войти</Button>
         }
     </>
   );

@@ -1,5 +1,5 @@
 import React from "react";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import { SignIn } from "./modules/SignIn/SignIn";
 import { Home } from "./modules/Home/Home";
 import { Library } from "./modules/Library/Library";
@@ -15,6 +15,7 @@ export const App = () => {
   return (
     <div className="app">
       <Routes>
+      <Route path="/" element={<Navigate replace to="/signIn" />}/>
         <Route path="/" element={<Wrapper />}>
           <Route path="/home" element={<Home />} />
           <Route path="/library" element={<Library/>}/>

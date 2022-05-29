@@ -1,4 +1,6 @@
-import React,{ FC } from "react";
+import { FC, useEffect } from "react";
+import { useAppSelector, useAppDispatch } from "core/redux/hooks";
+import {libThunk} from './LibraryThunk'
 import { Typography, List } from "antd";
 import { CardComponent } from "common/components/Card/Card";
 import "./Library.scss";
@@ -23,6 +25,17 @@ const data = [
 ];
 
 export const Library:FC<Props> = (props) => {
+  const dispatch = useAppDispatch();
+  const {playlists} = useAppSelector(state => state.lib);
+
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+
+    dispatch(libThunk(token))
+  }, [])
+
+
   return (
     <>
       <Title level={2} className="content__title">
@@ -38,10 +51,10 @@ export const Library:FC<Props> = (props) => {
           xl: 4,
           xxl: 6,
         }}
-        dataSource={data}
+        dataSource={playlists}
         renderItem={(item) => (
           <List.Item>
-            <CardComponent/>
+            <CardComponent playlist={item}/>
           </List.Item>
         )}
       />

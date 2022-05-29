@@ -1,13 +1,18 @@
-import React from 'react'
-import { Layout, Typography, List, Card} from "antd";
+import {FC} from 'react'
+import { Card} from "antd";
 import PhotoBottomHome from "assets/images/photoBottomHome.png";
+import {IGetLibItem} from 'modules/Library/interfaces/ILibrary';
 import './Card.scss'
 
-type Props = {}
+type Props = {
+  playlist:IGetLibItem;
+}
 
 const { Meta } = Card;
 
-export const CardComponent = (props: Props) => {
+export const CardComponent:FC<Props> = ({playlist}) => {
+
+
   return (
     <Card
     hoverable
@@ -17,11 +22,11 @@ export const CardComponent = (props: Props) => {
       <img
         className="content__card-img"
         alt="example"
-        src={PhotoBottomHome}
+        src={playlist?.images[0]?.url ? playlist?.images[0]?.url : PhotoBottomHome}
       />
     }
   >
-    <Meta title={'Title1'} description="www.instagram.com" />
+    <Meta title={playlist.name} />
   </Card>
   )
 }

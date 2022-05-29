@@ -25,7 +25,7 @@ const data = [
 export const Home:FC<Props> = (props) => {
   return (
     <>
-      <Title level={2} className="content__title">
+      {/* <Title level={2} className="content__title">
         Good Morning
       </Title>
       <List
@@ -44,7 +44,7 @@ export const Home:FC<Props> = (props) => {
             <CardComponent/>
           </List.Item>
         )}
-      />
+      /> */}
     </>
   );
 };

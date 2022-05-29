@@ -24,7 +24,7 @@ const data = [
 export const SignIn:FC<Props> = (props) => {
   return (
     <>
-      <Title level={2} className="content__title">
+      {/* <Title level={2} className="content__title">
         Spotify Playlist
       </Title>
       <List
@@ -65,7 +65,7 @@ export const SignIn:FC<Props> = (props) => {
           </List.Item>
         )}
       />
-      </div>
+      </div> */}
     </>
   );
 };
