@@ -1,0 +1,28 @@
+.ant-card.ant-card-bordered.ant-card-hoverable.content__card{
+    background: var(--color-card);
+    border:none;
+    padding: 20px;
+
+
+    .ant-card-meta-title{
+      color:var(--color-white);
+      font-size: 21px;
+      line-height: 27px;
+      letter-spacing: -0.02em;
+    }
+
+    .ant-card-meta-description{
+      color: #B3B3B3;
+    }
+
+    .ant-card-body{
+      padding: 0;
+    }
+
+    .content__card-img{
+      border-radius: 14px;
+      width: 191px;
+      height: 191px;
+      margin:0px auto 26px;
+    }
+  }

@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { FC } from "react";
 import { Menu } from "antd";
+import { Link } from "react-router-dom";
 import { ReactComponent as HomeIcon } from "assets/icons/homeNav.svg";
 import { ReactComponent as SearcIcon } from "assets/icons/searchNav.svg";
 import { ReactComponent as LibIcon } from "assets/icons/libNav.svg";
@@ -8,7 +9,7 @@ import './Sidebar.scss'
 
 type Props = {};
 
-export const Sidebar = (props: Props) => {
+export const Sidebar:FC<Props> = (props) => {
   return (
     <div>
       <img
@@ -26,19 +27,19 @@ export const Sidebar = (props: Props) => {
           {
             key: "1",
             icon: <HomeIcon />,
-            label: "Home",
+            label: <Link to="/home" className="menu__link">Home</Link>,
             className: "menu__item",
           },
           {
             key: "2",
             icon: <SearcIcon />,
-            label: "Search",
+            label: <Link to="/search" className="menu__link">Search</Link>,
             className: "menu__item",
           },
           {
             key: "3",
             icon: <LibIcon />,
-            label: "Library",
+            label: <Link to="/library" className="menu__link">Library</Link>,
             className: "menu__item",
           },
         ]}

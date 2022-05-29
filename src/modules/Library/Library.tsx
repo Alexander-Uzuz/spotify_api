@@ -1,9 +1,52 @@
-import React from 'react'
+import React,{ FC } from "react";
+import { Typography, List } from "antd";
+import { CardComponent } from "common/components/Card/Card";
+import "./Library.scss";
 
-type Props = {}
+type Props = {};
 
-export const Library = (props: Props) => {
+const { Title } = Typography;
+
+const data = [
+  {
+    title: "Title 1",
+  },
+  {
+    title: "Title 2",
+  },
+  {
+    title: "Title 3",
+  },
+  {
+    title: "Title 4",
+  },
+];
+
+export const Library:FC<Props> = (props) => {
   return (
-    <div>Library</div>
-  )
-}
+    <>
+      <Title level={2} className="content__title">
+        Playlists
+      </Title>
+      <List
+        grid={{
+          gutter: 16,
+          xs: 1,
+          sm: 2,
+          md: 4,
+          lg: 4,
+          xl: 4,
+          xxl: 6,
+        }}
+        dataSource={data}
+        renderItem={(item) => (
+          <List.Item>
+            <CardComponent/>
+          </List.Item>
+        )}
+      />
+    </>
+  );
+};
+
+
