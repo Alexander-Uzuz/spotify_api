@@ -1,0 +1,20 @@
+.arrows__container{
+    display: flex;
+    align-items: center;
+    width: 100px;
+    justify-content: space-between;
+  }
+  
+  .arrow__container{
+    width: 40px;
+    height: 40px;
+    background: var(--color-black);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .arrow{
+    cursor: pointer;
+  }

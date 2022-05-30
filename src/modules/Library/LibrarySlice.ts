@@ -1,6 +1,8 @@
+import { IGetPlaylists } from './interfaces/IGetPlaylists';
+import {IGetFollowingArtists} from './interfaces/IGetFollowingArtist';
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import {libThunk} from './LibraryThunk';
-import {IInitialState,IGetLib} from './interfaces/ILibrary';
+import {getPlaylistsThunk, getFollowingArtistsThunk} from './LibraryThunk';
+import {IInitialState} from './interfaces/ILibrary';
 
 
 
@@ -8,6 +10,7 @@ import {IInitialState,IGetLib} from './interfaces/ILibrary';
 
 const initialState:IInitialState = {
     playlists:[],
+    artists:[],
     error:null,
     loading:false,
 };
@@ -19,15 +22,28 @@ const libSlice = createSlice({
     reducers:{
     },
     extraReducers:(builder) =>{
-        builder.addCase(libThunk .pending, (state => {
+        builder.addCase(getPlaylistsThunk .pending, (state => {
             state.error = null;
             state.loading = true;
         }))
-        builder.addCase(libThunk .fulfilled, ((state,action:PayloadAction<IGetLib>) => {
+        builder.addCase(getPlaylistsThunk .fulfilled, ((state,action:PayloadAction<IGetPlaylists>) => {
             state.playlists = [...action.payload.items]
             state.loading = false;
         }))
-        builder.addCase(libThunk .rejected, (state, action:PayloadAction<any>) => {
+        builder.addCase(getPlaylistsThunk .rejected, (state, action:PayloadAction<any>) => {
+            state.error = action.payload;
+            state.loading = false;
+        })
+
+        builder.addCase(getFollowingArtistsThunk .pending, (state => {
+            state.error = null;
+            state.loading = true;
+        }))
+        builder.addCase(getFollowingArtistsThunk .fulfilled, ((state,action:PayloadAction<IGetFollowingArtists>) => {
+            state.artists = [...action.payload.artists.items]
+            state.loading = false;
+        }))
+        builder.addCase(getFollowingArtistsThunk .rejected, (state, action:PayloadAction<any>) => {
             state.error = action.payload;
             state.loading = false;
         })

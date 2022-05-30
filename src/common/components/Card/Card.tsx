@@ -1,11 +1,11 @@
 import {FC} from 'react'
 import { Card} from "antd";
 import PhotoBottomHome from "assets/images/photoBottomHome.png";
-import {IGetLibItem} from 'modules/Library/interfaces/ILibrary';
+import {IGetPlaylist} from 'modules/Library/interfaces/IGetPlaylists';
 import './Card.scss'
 
 type Props = {
-  playlist:IGetLibItem;
+  playlist:IGetPlaylist;
 }
 
 const { Meta } = Card;
