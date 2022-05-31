@@ -1,21 +1,26 @@
 import { useEffect } from "react";
-import { Button } from "antd";
-import { useLocation, useNavigate } from "react-router-dom";
+import { Button, Input } from "antd";
+import { useNavigate, useParams, useLocation } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "core/redux/hooks";
 import { signInThunk } from "modules/SignIn/SignInThunk";
 import { Arrows } from "./components/Arrows/Arrows";
+import {ReactComponent as SearchIcon} from 'assets/icons/search.svg';
+import {ReactComponent as CloseIcon} from 'assets/icons/close.svg';
 import { loginEndpoint } from "api/baseRequest";
 import { Profile } from "./components/Profile/Profile";
 import "./Header.scss";
-import TabsComponent from "./components/Tabs/Tabs";
+import Tabs from "./components/Tabs/Tabs";
 
 type Props = {};
 
+
 export const HeaderComponent = (props: Props) => {
-  const location = useLocation();
+  const params = useParams();
+  const {pathname} = useLocation();
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const { user, error } = useAppSelector((state) => state.signIn);
+  const token = localStorage.getItem('token');
 
 
   useEffect(() => {
@@ -44,9 +49,17 @@ export const HeaderComponent = (props: Props) => {
     <>
       <div className="header__left-container">
       <Arrows />
-      <TabsComponent/>
+      {params.category && <Tabs/>}
+      {pathname === '/search' && 
+      <Input
+      allowClear={{clearIcon: <CloseIcon/>}}
+      prefix={<SearchIcon/>}
+      placeholder='Artists, songs, or podcasts'
+      className="header__input-search"
+      bordered={false}
+      />} 
       </div>
-      {user.id ? (
+      {token ? (
         <Profile user={user} />
       ) : (
         <Button

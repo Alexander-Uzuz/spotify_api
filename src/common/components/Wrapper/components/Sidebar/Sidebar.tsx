@@ -39,7 +39,7 @@ export const Sidebar:FC<Props> = (props) => {
           {
             key: "3",
             icon: <LibIcon />,
-            label: <Link to="/library" className="menu__link">Library</Link>,
+            label: <Link to="/library/playlists" className="menu__link">Library</Link>,
             className: "menu__item",
           },
         ]}

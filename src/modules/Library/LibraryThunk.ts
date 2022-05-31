@@ -1,12 +1,12 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import {getPlaylist, getFollowArtist} from 'api/lib/libRequest';
+import {getSavePlaylist, getFollowArtist,getSaveAlbums} from 'api/lib/libRequest';
 
 export const getPlaylistsThunk = createAsyncThunk(
     'lib/getPlaylists',
     async function(token:string | null,{rejectWithValue}){
         if(typeof token === 'string'){
             try{
-                const response = await getPlaylist(token);
+                const response = await getSavePlaylist(token);
     
                 if(response.status === 401){
                     return rejectWithValue(response.message)
@@ -35,6 +35,27 @@ export const getFollowingArtistsThunk = createAsyncThunk(
             }catch(err:any){
                 return rejectWithValue(err.message)
             }
+        }
+    }
+)
+
+export const getSaveAlbumsThunk = createAsyncThunk(
+    'lib/getSaveAlbums',
+    async function(token:string | null, {rejectWithValue}){
+        if(typeof token === 'string'){
+            try{
+                const response = await getSaveAlbums(token);
+
+                if(response.status === 401){
+                    return rejectWithValue(response.message)
+                }
+
+                return response;
+            }catch(err:any){
+                return rejectWithValue(err.message)
+            }
+
+
         }
     }
 )

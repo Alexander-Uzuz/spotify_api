@@ -1,21 +1,21 @@
 import { IImage } from "./ILibrary";
 
 export interface IGetFollowingArtist{
-    "external_urls" : {
-        "spotify" : string
+    external_urls : {
+        spotify : string
       },
-      "followers" : {
-        "href" : null | string,
-        "total" : number
+      followers : {
+        href : null | string,
+        total : number
       },
-      "genres" : string[] | null,
-      "href" : string,
-      "id" : string,
-      "images" : IImage[],
-      "name" : string,
-      "popularity" : number,
-      "type" : string,
-      "uri" : string
+      genres : string[] | null,
+      href : string,
+      id : string,
+      images : IImage[],
+      name : string,
+      popularity : number,
+      type : string,
+      uri : string
 }
 
 

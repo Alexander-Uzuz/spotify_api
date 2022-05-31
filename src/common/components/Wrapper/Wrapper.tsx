@@ -28,7 +28,7 @@ export const Wrapper = (props: Props) => {
         <Header className="header">
           <HeaderComponent />
         </Header>
-        <Content className="content">
+        <Content className="content" style={{height:'100vh'}}>
           <Outlet/>
         </Content>
       </Layout>

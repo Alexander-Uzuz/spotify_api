@@ -1,3 +1,5 @@
+import { IImage } from "./ILibrary";
+
 export interface IGetPlaylists {
     href: string;
     items: IGetPlaylist[];
@@ -14,13 +16,7 @@ export interface IGetPlaylists {
     external_urls: { spotify: string };
     href: string;
     id: string;
-    images: [
-      {
-        height: null;
-        url: string;
-        width: null;
-      }
-    ];
+    images: IImage[];
     name: string;
     owner: {
       display_name: string;

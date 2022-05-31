@@ -2,15 +2,23 @@ import {FC} from 'react'
 import { Card} from "antd";
 import PhotoBottomHome from "assets/images/photoBottomHome.png";
 import {IGetPlaylist} from 'modules/Library/interfaces/IGetPlaylists';
+import {IGetFollowingArtist} from 'modules/Library/interfaces/IGetFollowingArtist';
+import {IAlbum} from 'modules/Library/interfaces/IGetSaveAlbums';
 import './Card.scss'
+import { findByLabelText } from '@testing-library/react';
 
 type Props = {
-  playlist:IGetPlaylist;
+  // playlist:IGetPlaylist | IGetFollowingArtist | IAlbum;
+  card:any;
+  flag?:'album' | '';
+
 }
 
 const { Meta } = Card;
 
-export const CardComponent:FC<Props> = ({playlist}) => {
+//т.к объект альбома это два ключа, а не один как плейлист и артист, пришлось делать костыли с флагами, исправить !!!
+
+export const CardComponent:FC<Props> = ({card, flag}) => {
 
 
   return (
@@ -22,11 +30,11 @@ export const CardComponent:FC<Props> = ({playlist}) => {
       <img
         className="content__card-img"
         alt="example"
-        src={playlist?.images[0]?.url ? playlist?.images[0]?.url : PhotoBottomHome}
+        src={flag === 'album' ? card.album.images[0].url : (card?.images[0]?.url ? card?.images[0]?.url : PhotoBottomHome)}
       />
     }
   >
-    <Meta title={playlist.name} />
+    <Meta title={flag === 'album' ? card.album.name : card.name} />
   </Card>
   )
 }

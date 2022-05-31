@@ -1,29 +1,58 @@
+.ant-layout-header.header {
+  height: 88px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #121212;
+  padding: 0;
+}
 
-  .ant-layout-header.header{
-    height:88px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background:#121212;
-    padding: 0;
+.ant-btn.ant-btn-link.header__button-signIn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100px;
+  background-color: var(--color-white);
+  border-radius: 20px;
+  height: 40px;
+  color: var(--color-black);
+  font-weight: 500;
+  transition: all 0.3s ease;
+  padding: 0 !important;
+
+  :hover {
+    transform: scale(1.2);
+    font-weight: 700;
   }
-  
+}
 
-  .ant-btn.ant-btn-link.header__button-signIn{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100px;
-    background-color: var(--color-white);
-    border-radius: 20px;
-    height:40px;
-    color:var(--color-black);
+.ant-input-affix-wrapper-borderless,
+.ant-input-affix-wrapper-borderless:hover {
+  background: var(--color-white) !important;
+}
+
+.ant-input-affix-wrapper-borderless.header__input-search {
+  background: var(--color-white);
+  border-radius: 41px;
+  width: 455px;
+  padding: 12px 11px;
+  // padding: 15px 0 12px 17px;
+  margin-left: 20px;
+
+  span.ant-input-prefix {
+    margin-right: 17px;
+  }
+
+  :hover {
+    background: var(--color-white);
+    margin-left: 0 !important;
+  }
+
+  input.ant-input.ant-input-borderless {
+    width: 85%;
     font-weight: 500;
-    transition: all 0.3s ease;
-    padding: 0 !important;
-
-    :hover{
-      transform: scale(1.2);
-      font-weight: 700;
-    }
+    font-size: 16px;
+    letter-spacing: -0.07em;
+    color: #767676;
   }
+}
