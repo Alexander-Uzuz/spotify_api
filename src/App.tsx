@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import { SignIn } from "./modules/SignIn/SignIn";
 import { Home } from "./modules/Home/Home";
@@ -9,6 +9,8 @@ import { Search } from "./modules/Search/Search";
 import "./App.scss";
 
 export const App = () => {
+
+
 
   return (
     <div className="app">

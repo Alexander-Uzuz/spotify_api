@@ -1,0 +1,112 @@
+.player__wrapper {
+  * {
+    margin-bottom: 0;
+  }
+
+  position: fixed;
+  color: white;
+  left: 0px;
+  bottom: 0px;
+  height: 112px;
+  width: 100%;
+  background-color: #282828;
+  display: flex;
+  align-items: center;
+
+  .player__container {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-left: 19px;
+    padding-right: 28px;
+
+    .player__info {
+      display: flex;
+      align-items: center;
+
+      .player__img {
+        width: 70px;
+        height: 70px;
+        margin-right: 18px;
+      }
+
+      .player__description-artist {
+        font-weight: 700;
+        font-size: 18px;
+        line-height: 23px;
+        letter-spacing: -0.05em;
+        color: var(--color-white);
+        margin-bottom: 4px;
+      }
+
+      .player__description-song {
+        font-weight: 700;
+        font-size: 15px;
+        line-height: 20px;
+        letter-spacing: -0.05em;
+        color: #b3b3b3;
+      }
+
+      .player__like {
+        width: 20px;
+        height: 20px;
+        margin-left: 20px;
+        cursor: pointer;
+      }
+    }
+
+    .player__turntable {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      .player__turntable-top {
+        display: flex;
+        align-items: center;
+
+        .player__turntable__button {
+          cursor: pointer;
+        }
+
+        .player__turnable-handle__play {
+          margin: 0 14px;
+        }
+
+        .player__turntable-handle__back {
+          margin-left: 20px;
+        }
+
+        .player__turnable-handle__next {
+          margin-right: 20px;
+        }
+      }
+
+      .player__turntable-bottom {
+        display: flex;
+        align-items: center;
+
+        .player__turntable-bottom_time {
+          font-weight: 700;
+          font-size: 14px;
+          line-height: 18px;
+          letter-spacing: 0.04em;
+          color: #c4c4c4;
+        }
+
+        .player__turntable-bottom_line {
+          margin: 0 4px;
+        }
+      }
+    }
+
+    .player__right{
+        display: flex;
+        align-items: center;
+
+        .player__right-volume{
+            margin-right: 7px;
+        }
+    }
+  }
+}

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Layout } from "antd";
+import { Player } from "../Player/Player";
 import { HeaderComponent } from "./components/Header/Header";
 import { Sidebar } from "./components/Sidebar/Sidebar";
 import {Outlet} from 'react-router-dom';
@@ -7,7 +8,7 @@ import './Wrapper.scss';
 
 type Props = {};
 
-const { Sider, Content, Header } = Layout;
+const { Sider, Content, Header, Footer } = Layout;
 
 
 export const Wrapper = (props: Props) => {
@@ -31,6 +32,7 @@ export const Wrapper = (props: Props) => {
         <Content className="content" style={{height:'100vh'}}>
           <Outlet/>
         </Content>
+        <Player/>
       </Layout>
     </Layout>
   );
