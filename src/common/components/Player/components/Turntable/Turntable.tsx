@@ -1,23 +1,23 @@
-import React,{FC} from 'react';
+import {FC} from 'react';
 import PlayerRepeatIcon from 'assets/icons/repeatPlayer.svg';
 import PlayerBackIcon from 'assets/icons/backPlayer.svg';
 import PlayerNextIcon from 'assets/icons/nextPlayer.svg';
 import PlayerMixIcon from 'assets/icons/mixPlayer.svg';
+import StopPlayerIcon from 'assets/icons/stopPlayer.svg';
+import PlayPlayerIcon from 'assets/icons/playPlayer.svg';
 import { useAppDispatch } from 'core/redux/hooks';
 import { prevTrack, nextTrack } from 'modules/Playlist/playlistSlice';
-import {Paused} from './components/Paused';
-import {Play} from './components/Play'
 import {Bar} from './components/Bar';
-import { useAudioPlayer } from "../../hooks/useAudioPlayer";
+
 type Props = {
-    // curTime:any, 
-    // duration:any, 
-    // onTimeUpdate:any;
-    // handleClick:any;
+  curTime:number | undefined;
+  duration:number | undefined;
+  playing:boolean;
+  setPlaying:(playing:boolean) => void;
+  setClickedTime:any;
 }
 
-export const Turntable:FC<Props> = () => {
-  const {curTime,duration,playing,setPlaying,setClickedTime} = useAudioPlayer();
+export const Turntable:FC<Props> = ({curTime, duration, playing, setPlaying, setClickedTime}) => {
   const dispatch = useAppDispatch();
 
   const handlePrevTrack = () => dispatch(prevTrack());
@@ -32,15 +32,17 @@ export const Turntable:FC<Props> = () => {
             {
               playing
               ?
-              <Paused handleClick={() => setPlaying(false)}/>
+              <img src={StopPlayerIcon} alt="" className="player__turnable-handle__play player__turntable__button" onClick={() => setPlaying(false)}/>
               :
-              <Play handleClick={() => setPlaying(true)}/>
+              <img src={PlayPlayerIcon} alt="" className="player__turnable-handle__play player__turntable__button" onClick={() => setPlaying(true)}/>
             }
             <img src={PlayerNextIcon} alt="" className="player__turnable-handle__next player__turntable__button" onClick={handleNextTrack}/>
         </div>
         <img src={PlayerMixIcon} alt="" className="player__turntable-top__mix player__turntable__button"/>
     </div>
-    <Bar curTime={curTime} duration={duration} onTimeUpdate={(time:any) => setClickedTime(time)}/>
+    <Bar curTime={curTime} duration={duration} onTimeUpdate={(time:number) => setClickedTime(time)}/>
 </div>
   )
 }
+
+

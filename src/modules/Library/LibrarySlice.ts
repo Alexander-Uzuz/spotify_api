@@ -13,6 +13,7 @@ const initialState:IInitialState = {
     playlists:[],
     artists:[],
     albums:[],
+    currentItemId:'',
     error:null,
     loading:false,
 };
@@ -22,6 +23,9 @@ const libSlice = createSlice({
     name:'lib',
     initialState,
     reducers:{
+        changeCurrentItem(state, action:PayloadAction<string>){
+            state.currentItemId = action.payload;
+        }
     },
     extraReducers:(builder) =>{
         builder.addCase(getPlaylistsThunk .pending, (state => {
@@ -65,5 +69,5 @@ const libSlice = createSlice({
     }
 })
 
-export const {} = libSlice.actions;
+export const {changeCurrentItem} = libSlice.actions;
 export default libSlice.reducer

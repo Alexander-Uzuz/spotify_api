@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useRef, useEffect, forwardRef } from "react";
 import VolumeIcon from "assets/icons/volumePlayer.svg";
 import VolumeLineIcon from "assets/icons/lineVolumePlayer.svg";
 import { Song } from "./components/Song/Song";
@@ -6,10 +6,17 @@ import { useAppSelector } from "core/redux/hooks";
 import { Turntable } from "./components/Turntable/Turntable";
 import "./Player.scss";
 
-type Props = {};
+type Props = {
+  curTime:number | undefined;
+  duration:number | undefined;
+  playing:boolean;
+  setPlaying:(playing:boolean) => void;
+  setClickedTime:any;
+};
 
-export const Player: FC<Props> = (props) => {
-  const {currentTrack} = useAppSelector(state => state.playlist)
+export const Player:FC<Props> = ({curTime, duration, playing, setPlaying, setClickedTime}) => {
+  const {currentTrack} = useAppSelector(state => state.playlist);
+
 
   return (
     <div className="player__wrapper">
@@ -23,7 +30,7 @@ export const Player: FC<Props> = (props) => {
         songArtist={currentTrack?.track.artists[0].name ? currentTrack?.track.artists[0].name : 'Без имени'}
         images={currentTrack?.track.album.images[0].url ? currentTrack?.track.album.images[0].url : ''}
         />
-        <Turntable/>
+        <Turntable curTime={curTime} duration={duration} playing={playing} setPlaying={setPlaying} setClickedTime={setClickedTime}/>
         <div className="player__right">
           <img src={VolumeIcon} alt="" className="player__right-volume" />
           <img src={VolumeLineIcon} alt="" className="player__right-line" />
@@ -31,4 +38,6 @@ export const Player: FC<Props> = (props) => {
       </div>
     </div>
   );
-};
+
+}
+

@@ -5,6 +5,7 @@ export interface IInitialState{
     playlists:IGetPlaylist[],
     artists:any[],
     albums:any[],
+    currentItemId:string;
     error:null | string;
     loading:boolean;
 }

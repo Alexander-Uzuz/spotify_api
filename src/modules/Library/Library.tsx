@@ -13,11 +13,14 @@ import {ReactComponent as SpinnerLogo} from 'assets/icons/spinner.svg';
 import { IGetPlaylist } from "./interfaces/IGetPlaylists";
 import "./Library.scss";
 
-type Props = {};
+type Props = {
+  playing:boolean;
+  setPlaying:(playing:boolean) => void;
+};
 
 const { Title } = Typography;
 
-export const Library: FC<Props> = (props) => {
+export const Library:FC<Props> = ({playing,setPlaying}) => {
   const dispatch = useAppDispatch();
   const { pathname } = useLocation();
   const { playlists, artists, albums, error, loading } = useAppSelector(
@@ -44,6 +47,8 @@ export const Library: FC<Props> = (props) => {
       dispatch(getSaveAlbumsThunk(token));
     }
   }, [pathname]);
+
+
 
   return (
     <>
@@ -77,7 +82,9 @@ export const Library: FC<Props> = (props) => {
               <List.Item>
                 <CardComponent
                   card={item}
-                  flag={pathname === "/library/albums" ? "album" : ""}
+                  flag={pathname === "/library/albums" ? "album" : (pathname === '/library/playlists' ? 'playlists' : 'artists')}
+                  playing={playing}
+                  setPlaying={setPlaying}
                 />
               </List.Item>
             )}
@@ -88,4 +95,7 @@ export const Library: FC<Props> = (props) => {
       )}
     </>
   );
-};
+
+}
+
+
