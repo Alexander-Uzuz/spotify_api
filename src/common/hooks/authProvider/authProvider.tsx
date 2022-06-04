@@ -6,6 +6,7 @@ type Props = {}
 
 export const RequireAuth = (props: Props) => {
     const token = localStorage.getItem('token');
+    
 
     console.log(token,'token')
 

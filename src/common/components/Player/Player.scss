@@ -24,6 +24,7 @@
     .player__info {
       display: flex;
       align-items: center;
+      width: 230px;
 
       .player__img {
         width: 70px;
@@ -64,6 +65,7 @@
       .player__turntable-top {
         display: flex;
         align-items: center;
+        margin-bottom: 15px;
 
         .player__turntable__button {
           cursor: pointer;
@@ -79,6 +81,11 @@
 
         .player__turnable-handle__next {
           margin-right: 20px;
+        }
+
+        .player__turnable-handle__play{
+          width: 51px;
+          height: 51px;
         }
       }
 
@@ -107,6 +114,43 @@
         .player__right-volume{
             margin-right: 7px;
         }
+    }
+  }
+}
+
+
+.bar {
+  user-select: none;
+  width: 100%;
+  display: flex;
+  align-items: center;
+
+  .bar__time {
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 18px;
+    letter-spacing: 0.04em;
+    color: #c4c4c4;
+  }
+
+  .bar__progress {
+    flex: 1;
+    border-radius: 5px;
+    margin: 0 20px;
+    width: 600px;
+    height: 5px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    background: #C4C4C4;
+
+    .bar__progress__knob {
+      position: relative;
+      height: 16px;
+      width: 16px;
+      border: 1.5px solid white;
+      border-radius: 50%;
+      background-color: #FFF;
     }
   }
 }
