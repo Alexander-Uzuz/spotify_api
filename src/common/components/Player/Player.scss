@@ -154,3 +154,14 @@
     }
   }
 }
+
+.player__right{
+  .ant-slider.player__slider.ant-slider-horizontal{
+    width: 105px;
+
+
+    .ant-slider-track{
+      background-color: #40ff40;
+    }
+  }
+}

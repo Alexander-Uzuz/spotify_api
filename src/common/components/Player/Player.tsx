@@ -1,6 +1,7 @@
-import { FC, useRef, useEffect, forwardRef } from "react";
+import { BaseSyntheticEvent, FC, useRef } from "react";
 import VolumeIcon from "assets/icons/volumePlayer.svg";
 import VolumeLineIcon from "assets/icons/lineVolumePlayer.svg";
+import { Slider } from "antd";
 import { Song } from "./components/Song/Song";
 import { useAppSelector } from "core/redux/hooks";
 import { Turntable } from "./components/Turntable/Turntable";
@@ -16,12 +17,14 @@ type Props = {
 
 export const Player:FC<Props> = ({curTime, duration, playing, setPlaying, setClickedTime}) => {
   const {currentTrack} = useAppSelector(state => state.playlist);
+  const audioPlayer = useRef<any>(null);
 
-
+  const handleRange = (value:number) => audioPlayer.current.volume = value / 100;
+  
   return (
     <div className="player__wrapper">
       <div className="player__container">
-        <audio id="audio" src={currentTrack?.track.preview_url}>
+        <audio ref={audioPlayer} id="audio" src={currentTrack?.track.preview_url}>
           <source src={currentTrack?.track.preview_url} />
           Your browser does not support the <code>audio</code> element.
         </audio>
@@ -33,7 +36,7 @@ export const Player:FC<Props> = ({curTime, duration, playing, setPlaying, setCli
         <Turntable curTime={curTime} duration={duration} playing={playing} setPlaying={setPlaying} setClickedTime={setClickedTime}/>
         <div className="player__right">
           <img src={VolumeIcon} alt="" className="player__right-volume" />
-          <img src={VolumeLineIcon} alt="" className="player__right-line" />
+          <Slider onChange={handleRange} className="player__slider" defaultValue={40}/>
         </div>
       </div>
     </div>
