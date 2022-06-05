@@ -12,7 +12,7 @@ import "./App.scss";
 export const App = () => {
   const {curTime,duration,playing,setPlaying,setClickedTime} = useAudioPlayer();
 
-
+  
 
   return (
     <div className="app">

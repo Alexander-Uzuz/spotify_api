@@ -9,7 +9,6 @@ export function useAudioPlayer() {
   useEffect(() => {
     const audio:any = <HTMLAudioElement>document.getElementById("audio");
 
-    // state setters wrappers
     const setAudioData = () => {
       setDuration(audio.duration);
       setCurTime(audio.currentTime);
@@ -17,12 +16,10 @@ export function useAudioPlayer() {
 
     const setAudioTime = () => setCurTime(audio.currentTime);
 
-    // DOM listeners: update React state on DOM events
     audio.addEventListener("loadeddata", setAudioData);
 
     audio.addEventListener("timeupdate", setAudioTime);
 
-    // React state listeners: update DOM on React state changes
     playing ? audio.play() : audio.pause();
 
     if (clickedTime && clickedTime !== curTime) {

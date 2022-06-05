@@ -1,6 +1,5 @@
-import { BaseSyntheticEvent, FC, useRef } from "react";
+import { FC, useRef } from "react";
 import VolumeIcon from "assets/icons/volumePlayer.svg";
-import VolumeLineIcon from "assets/icons/lineVolumePlayer.svg";
 import { Slider } from "antd";
 import { Song } from "./components/Song/Song";
 import { useAppSelector } from "core/redux/hooks";

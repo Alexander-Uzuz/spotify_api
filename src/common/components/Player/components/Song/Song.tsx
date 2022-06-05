@@ -1,6 +1,5 @@
 import React,{FC} from 'react';
-import PlayerImg from 'assets/images/playerPhoto.png';
-import HeaderIcon from 'assets/icons/heartPlayer.svg';
+import PlayerImg from 'assets/images/playerPhoto.png';;
 
 type Props = {
   songName:string;
@@ -16,7 +15,6 @@ export const Song:FC<Props> = ({songName,songArtist, images}) => {
         <h3 className="player__description-artist">{songArtist}</h3>
         <p className="player__description-song">{songName}</p>
     </div>
-    <img src={HeaderIcon} alt="" className='player__like'/>
 </div>
   )
 }
