@@ -1,0 +1,33 @@
+.genres{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    .genres__item{
+        display: flex;
+        flex-direction: column;
+        width: 493px;
+        background-color: #8D67AB;
+        border-radius: 10px;
+        transition:1s;
+    
+        .genres__title{
+            color:var(--color-white);
+            padding: 20px;
+        }
+    
+        img{
+            width: 316px;
+            height: 170px;
+            align-self: flex-end;
+        }
+    }
+}
+
+
+.genres__item:hover{
+    transform: scale(1.05);
+}
+
+
+

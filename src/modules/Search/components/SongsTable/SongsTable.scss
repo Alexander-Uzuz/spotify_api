@@ -1,0 +1,31 @@
+.songsTable td{
+    background-color: #121212;
+}
+
+.songsTable__img{
+    margin-right: 13px;
+}
+
+.songsTable__text{
+    color:var(--color-white);
+}
+
+.ant-table-cell.ant-table-cell-row-hover{
+    background-color: var(--color-smallCard) !important;
+}
+
+.ant-table-tbody>tr>td{
+    border-bottom: none !important;
+}
+
+.name__container{
+    display: flex;
+    align-items: center;
+
+
+}
+
+.ant-table-thead>tr>th{
+    background-color: #121212;
+    color:var(--color-white) !important;
+}

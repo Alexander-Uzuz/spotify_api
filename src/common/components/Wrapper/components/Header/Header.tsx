@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, FC, BaseSyntheticEvent } from "react";
 import { Button, Input } from "antd";
 import { useNavigate, useParams, useLocation } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "core/redux/hooks";
@@ -8,19 +8,23 @@ import {ReactComponent as SearchIcon} from 'assets/icons/search.svg';
 import {ReactComponent as CloseIcon} from 'assets/icons/close.svg';
 import { loginEndpoint } from "api/baseRequest";
 import { Profile } from "./components/Profile/Profile";
+import {getSearchThunk} from 'modules/Search/SearchThunk';
 import "./Header.scss";
 import Tabs from "./components/Tabs/Tabs";
 
 type Props = {};
 
 
-export const HeaderComponent = (props: Props) => {
+export const HeaderComponent:FC<Props> = (props) => {
   const params = useParams();
   const {pathname} = useLocation();
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const { user, error } = useAppSelector((state) => state.signIn);
   const token = localStorage.getItem('token');
+
+
+  const handleSearch = (e:BaseSyntheticEvent) => dispatch(getSearchThunk({token,searchValue:e.target.value}))
 
 
   useEffect(() => {
@@ -57,6 +61,7 @@ export const HeaderComponent = (props: Props) => {
       placeholder='Artists, songs, or podcasts'
       className="header__input-search"
       bordered={false}
+      onChange={handleSearch}
       />} 
       </div>
       {token ? (

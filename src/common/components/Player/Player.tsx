@@ -15,6 +15,7 @@ type Props = {
 };
 
 export const Player:FC<Props> = ({curTime, duration, playing, setPlaying, setClickedTime}) => {
+  
   const {currentTrack} = useAppSelector(state => state.playlist);
   const audioPlayer = useRef<any>(null);
 

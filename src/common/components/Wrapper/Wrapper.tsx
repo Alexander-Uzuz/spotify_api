@@ -33,7 +33,7 @@ export const Wrapper:FC<Props> = ({curTime, duration, playing, setPlaying, setCl
         <Header className="header">
           <HeaderComponent />
         </Header>
-        <Content className="content" style={{height:'100vh'}}>
+        <Content className="content">
           <Outlet/>
         </Content>
         <Player curTime={curTime} duration={duration} playing={playing} setPlaying={setPlaying} setClickedTime={setClickedTime}/>

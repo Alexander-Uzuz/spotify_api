@@ -9,6 +9,8 @@ import { RequireAuth } from "./common/hooks/authProvider/authProvider";
 import { Search } from "./modules/Search/Search";
 import "./App.scss";
 
+//план на 14.06 2.Сверстать страницу при поиске
+
 export const App = () => {
   const {curTime,duration,playing,setPlaying,setClickedTime} = useAudioPlayer();
 

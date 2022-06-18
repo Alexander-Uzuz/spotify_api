@@ -12,6 +12,8 @@
 
 body{
   font-family: 'DM Sans', sans-serif;
+  height: 100vh;
+  background-color: #121212;
 }
 
 *{
@@ -20,9 +22,9 @@ body{
   box-sizing: border-box;
 }
 
-.app{
-  height: 100vh;
-}
+// .app{
+//   min-height: 100vh;
+// }
 
 
 
