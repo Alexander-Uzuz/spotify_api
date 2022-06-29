@@ -12,6 +12,10 @@ const MusicPlayerProvider = (props: any) => {
   useEffect(() => {
     const audio: any = document.getElementById("audio");
 
+    if(!audio){
+      window.location.reload();
+    }
+
     const setAudioData = () => {
       setDuration(audio.duration);
       setCurTime(audio.currentTime);

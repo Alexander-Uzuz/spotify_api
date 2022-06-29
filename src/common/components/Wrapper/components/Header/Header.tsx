@@ -9,6 +9,7 @@ import {ReactComponent as CloseIcon} from 'assets/icons/close.svg';
 import { loginEndpoint } from "api/baseRequest";
 import { Profile } from "./components/Profile/Profile";
 import {getSearchThunk} from 'modules/Search/SearchThunk';
+import { debounce } from "lodash";
 import "./Header.scss";
 import Tabs from "./components/Tabs/Tabs";
 
@@ -24,7 +25,17 @@ export const HeaderComponent:FC<Props> = (props) => {
   const token = localStorage.getItem('token');
 
 
-  const handleSearch = (e:BaseSyntheticEvent) => dispatch(getSearchThunk({token,searchValue:e.target.value}))
+  const debouncedSearch = debounce(async (searchValue:string) => {
+    await dispatch(getSearchThunk({token,searchValue}))
+  },300);
+
+  const handleSearch = (e:BaseSyntheticEvent) => debouncedSearch(e.target.value);
+
+  useEffect(() => {
+    return () => {
+      debouncedSearch.cancel()
+    }
+  },[debouncedSearch])
 
 
   useEffect(() => {

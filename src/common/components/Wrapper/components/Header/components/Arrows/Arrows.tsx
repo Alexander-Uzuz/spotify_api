@@ -1,11 +1,16 @@
 import React,{FC, useState} from 'react';
+import { useNavigate } from 'react-router-dom';
 import './Arrows.scss'
 
 type Props = {}
 
 export const Arrows:FC<Props> = (props: Props) => {
+    const navigate = useNavigate()
     const [activeButton, setActiveButton] = useState<"left" | "right">("right");
-    const handleButton = (direction: "left" | "right") => setActiveButton(direction);
+    const handleButton = (direction: "left" | "right") => {
+      direction === "left" ? navigate(-1) : navigate(1);
+      setActiveButton(direction)
+    };
 
 
 

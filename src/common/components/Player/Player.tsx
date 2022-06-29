@@ -1,39 +1,55 @@
-import { FC, useRef } from "react";
+import { FC, useEffect, useRef } from "react";
 import VolumeIcon from "assets/icons/volumePlayer.svg";
 import { Slider } from "antd";
 import { Song } from "./components/Song/Song";
 import { useAppSelector } from "core/redux/hooks";
+import { useAppDispatch } from "core/redux/hooks";
+import { addImgTrack } from "modules/Playlist/playlistSlice";
 import { Turntable } from "./components/Turntable/Turntable";
 import "./Player.scss";
 
 type Props = {
-  curTime:number | undefined;
-  duration:number | undefined;
-  playing:boolean;
-  setPlaying:(playing:boolean) => void;
-  setClickedTime:any;
 };
 
-export const Player:FC<Props> = ({curTime, duration, playing, setPlaying, setClickedTime}) => {
-  
-  const {currentTrack} = useAppSelector(state => state.playlist);
+
+
+export const Player:FC<Props> = () => {
+  const {flag, currentTrack} = useAppSelector(state => state.playlist);
+  const {playlist, currentItemId} = useAppSelector(state => state.lib);
   const audioPlayer = useRef<any>(null);
+  const dispatch = useAppDispatch();
+
+  const addImgAlbum = () =>{
+    const img = playlist.find(item => item.id === currentItemId)?.img;
+    dispatch(addImgTrack(img ? img : ''))
+    return img ? img : ''
+  }
+
+  useEffect(() => {
+      if(currentTrack){
+        localStorage.setItem('currentTrack', JSON.stringify(currentTrack));
+        localStorage.setItem('flag', flag);
+      }
+  },[])
 
   const handleRange = (value:number) => audioPlayer.current.volume = value / 100;
   
   return (
     <div className="player__wrapper">
       <div className="player__container">
-        <audio ref={audioPlayer} id="audio" src={currentTrack?.track.preview_url}>
-          <source src={currentTrack?.track.preview_url} />
+        <audio ref={audioPlayer} 
+        id="audio" 
+        src={currentTrack?.preview_url}>
+          <source 
+          src={currentTrack?.preview_url} />
           Your browser does not support the <code>audio</code> element.
         </audio>
         <Song 
-        songName={currentTrack?.track.name ? currentTrack?.track.name : 'Без названия'} 
-        songArtist={currentTrack?.track.artists[0].name ? currentTrack?.track.artists[0].name : 'Без имени'}
-        images={currentTrack?.track.album.images[0].url ? currentTrack?.track.album.images[0].url : ''}
+        songName={currentTrack?.name ? currentTrack.name : ""} 
+        songArtist={currentTrack?.artistName ? currentTrack.artistName : ""}
+        images={currentTrack?.img ? currentTrack.img : (flag === "album" ? addImgAlbum() : '')}
         />
-        <Turntable curTime={curTime} duration={duration} playing={playing} setPlaying={setPlaying} setClickedTime={setClickedTime}/>
+        <Turntable/>
         <div className="player__right">
           <img src={VolumeIcon} alt="" className="player__right-volume" />
           <Slider onChange={handleRange} className="player__slider" defaultValue={40}/>
@@ -43,4 +59,5 @@ export const Player:FC<Props> = ({curTime, duration, playing, setPlaying, setCli
   );
 
 }
+
 

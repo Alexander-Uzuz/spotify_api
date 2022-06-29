@@ -7,16 +7,12 @@ import {Outlet} from 'react-router-dom';
 import './Wrapper.scss';
 
 type Props = {
-  curTime:number | undefined;
-  duration:number | undefined;
-  playing:boolean;
-  setPlaying:(playing:boolean) => void;
-  setClickedTime:any;
+
 };
 
 const { Sider, Content, Header } = Layout;
 
-export const Wrapper:FC<Props> = ({curTime, duration, playing, setPlaying, setClickedTime}) => {
+export const Wrapper:FC<Props> = () => {
   const [collapsed, setCollapsed] = useState(false);
   return (
 <Layout>
@@ -36,20 +32,8 @@ export const Wrapper:FC<Props> = ({curTime, duration, playing, setPlaying, setCl
         <Content className="content">
           <Outlet/>
         </Content>
-        <Player curTime={curTime} duration={duration} playing={playing} setPlaying={setPlaying} setClickedTime={setClickedTime}/>
+        <Player/>
       </Layout>
     </Layout>
   )
 }
-
-
-
-
-
-// export const Example = forwardRef<HTMLImageElement, Props>(({curTime, duration, playing, setPlaying, setClickedTime}, ref) => {
-
-//   return (
-//       <>
-//       </>
-//   )
-// })

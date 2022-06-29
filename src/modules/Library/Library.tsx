@@ -1,31 +1,31 @@
-import { FC, useEffect } from "react";
+import { FC, useEffect, useContext } from "react";
 import { useAppSelector, useAppDispatch } from "core/redux/hooks";
 import {
   getPlaylistsThunk,
   getFollowingArtistsThunk,
   getSaveAlbumsThunk,
 } from "./LibraryThunk";
+import { MusicPlayerContext } from "core/context/PlayerContext";
 import { useLocation } from "react-router-dom";
 import { Typography, List, Spin } from "antd";
 import { CardComponent } from "common/components/Card/Card";
-import { IGetFollowingArtist } from "./interfaces/IGetFollowingArtist";
 import {ReactComponent as SpinnerLogo} from 'assets/icons/spinner.svg';
-import { IGetPlaylist } from "./interfaces/IGetPlaylists";
+import { getPlaylistsItemThunk, getArtistItemThunk, getAlbumItemThunk } from "modules/Playlist/playlistThunk";
+import { changeCurrentItem } from "modules/Library/LibrarySlice";
 import "./Library.scss";
 
 type Props = {
-  playing:boolean;
-  setPlaying:(playing:boolean) => void;
+
 };
 
 const { Title } = Typography;
 
-export const Library:FC<Props> = ({playing,setPlaying}) => {
+export const Library:FC<Props> = () => {
+  const {playing, setPlaying} = useContext(MusicPlayerContext);
   const dispatch = useAppDispatch();
+  const token = localStorage.getItem('token');
   const { pathname } = useLocation();
-  const { playlists, artists, albums, error, loading } = useAppSelector(
-    (state) => state.lib
-  );
+  const { playlist, error, loading,flag,currentItemId } = useAppSelector((state) => state.lib);
 
   useEffect(() => {
     if (error) {
@@ -47,6 +47,22 @@ export const Library:FC<Props> = ({playing,setPlaying}) => {
       dispatch(getSaveAlbumsThunk(token));
     }
   }, [pathname]);
+
+  const handlePlay = (id:string) => {
+    dispatch(changeCurrentItem(id));
+    const data = {token,id};
+
+    if(flag === "playlists"){
+      dispatch(getPlaylistsItemThunk(data))
+    }
+    if(flag === "artists"){
+      dispatch(getArtistItemThunk(data))
+    }
+    if(flag === "album"){
+      dispatch(getAlbumItemThunk(data))
+    }
+    setPlaying(true);
+  }
 
 
 
@@ -71,20 +87,15 @@ export const Library:FC<Props> = ({playing,setPlaying}) => {
               xl: 4,
               xxl: 6,
             }}
-            dataSource={
-              pathname === "/library/playlists"
-                ? playlists
-                : pathname === "/library/artists"
-                ? artists
-                : albums
-            }
-            renderItem={(item: IGetFollowingArtist | IGetPlaylist) => (
+            dataSource={playlist}
+            renderItem={(item) => (
               <List.Item>
                 <CardComponent
                   card={item}
-                  flag={pathname === "/library/albums" ? "album" : (pathname === '/library/playlists' ? 'playlists' : 'artists')}
                   playing={playing}
                   setPlaying={setPlaying}
+                  handlePlay={handlePlay}
+                  currentItemId={currentItemId}
                 />
               </List.Item>
             )}

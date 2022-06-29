@@ -21,11 +21,12 @@
 .name__container{
     display: flex;
     align-items: center;
-
-
 }
+
 
 .ant-table-thead>tr>th{
-    background-color: #121212;
+    background-color: #121212 !important;
     color:var(--color-white) !important;
+    border-bottom: 0px !important;
 }
+

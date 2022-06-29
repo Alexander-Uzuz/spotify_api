@@ -1,48 +1,28 @@
-import { BaseSyntheticEvent, FC, ForwardedRef, forwardRef } from "react";
+import { FC } from "react";
 import { Card } from "antd";
-import PhotoBottomHome from "assets/images/photoBottomHome.png";
-import { useAppDispatch, useAppSelector } from "core/redux/hooks";
-import { changeCurrentItem } from "modules/Library/LibrarySlice";
-import { getPlaylistItemThunk } from "modules/Playlist/playlistThunk";
-import { IGetPlaylist } from "modules/Library/interfaces/IGetPlaylists";
-import { IGetFollowingArtist } from "modules/Library/interfaces/IGetFollowingArtist";
-import { IAlbum } from "modules/Library/interfaces/IGetSaveAlbums";
 import "./Card.scss";
 
 type Props = {
-  // playlist:IGetPlaylist | IGetFollowingArtist | IAlbum;
-  card: any;
-  flag?: "album" | "playlists" | "artists";
+  card: {
+    id:string;
+    img:string;
+    name:string;
+  };
+  currentItemId:string;
   playing: boolean;
   setPlaying: (playing: boolean) => void;
+  handlePlay:(id:string) => void;
 };
 
 const { Meta } = Card;
 
-//т.к объект альбома это два ключа, а не один как плейлист и артист, пришлось делать костыли с флагами, исправить !!!
-
 export const CardComponent: FC<Props> = ({
   card,
-  flag,
   playing,
+  currentItemId,
   setPlaying,
+  handlePlay,
 }) => {
-  const dispatch = useAppDispatch();
-  const { currentItemId } = useAppSelector((state) => state.lib);
-
-
-  const handlePlay = () => {
-    if(flag === 'playlists'){
-      dispatch(changeCurrentItem(card.id));
-      dispatch(
-        getPlaylistItemThunk({
-          token: localStorage.getItem("token"),
-          id: card.id,
-        })
-      );
-    }
-    setPlaying(true);
-  }
   const handleStop = () => setPlaying(false);
 
   return (
@@ -65,7 +45,7 @@ export const CardComponent: FC<Props> = ({
         </svg>
       ) : (
         <svg
-        onClick={handlePlay} 
+        onClick={() => handlePlay(card.id)} 
         className="card__play" 
         width="51" height="51" 
         fill="#1ED7">
@@ -83,17 +63,11 @@ export const CardComponent: FC<Props> = ({
           <img
             className="content__card-img"
             alt="example"
-            src={
-              flag === "album"
-                ? card.album.images[0].url
-                : card?.images[0]?.url
-                ? card?.images[0]?.url
-                : PhotoBottomHome
-            }
+            src={card.img}
           />
         }
       >
-        <Meta title={flag === "album" ? card.album.name : card.name} />
+        <Meta title={card.name} />
       </Card>
     </div>
   );

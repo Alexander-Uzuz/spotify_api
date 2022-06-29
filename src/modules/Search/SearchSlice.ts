@@ -24,6 +24,7 @@ const searchSlice = createSlice({
         }))
         builder.addCase(getSearchThunk .rejected, (state, action:PayloadAction<any>) => {
             state.error = action.payload;
+            state.searchData = null;
             state.loading = false;
         })
     }

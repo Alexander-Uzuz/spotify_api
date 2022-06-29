@@ -1,23 +1,21 @@
-import {FC} from 'react';
+import {FC, useContext} from 'react';
 import PlayerBackIcon from 'assets/icons/backPlayer.svg';
 import PlayerNextIcon from 'assets/icons/nextPlayer.svg';
 import StopPlayerIcon from 'assets/icons/stopPlayer.svg';
 import PlayPlayerIcon from 'assets/icons/playPlayer.svg';
+import { MusicPlayerContext } from "core/context/PlayerContext";
 import { useAppDispatch } from 'core/redux/hooks';
 import { prevTrack, nextTrack } from 'modules/Playlist/playlistSlice';
 import {Bar} from './components/Bar';
 
 type Props = {
-  curTime:number | undefined;
-  duration:number | undefined;
-  playing:boolean;
-  setPlaying:(playing:boolean) => void;
-  setClickedTime:any;
+
+
 }
 
-export const Turntable:FC<Props> = ({curTime, duration, playing, setPlaying, setClickedTime}) => {
+export const Turntable:FC<Props> = () => {
   const dispatch = useAppDispatch();
-
+  const {curTime, duration, playing, setPlaying, setClickedTime} = useContext(MusicPlayerContext);
   const handlePrevTrack = () => dispatch(prevTrack());
   const handleNextTrack = () => dispatch(nextTrack());
 
