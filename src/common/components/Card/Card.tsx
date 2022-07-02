@@ -1,5 +1,7 @@
 import { FC } from "react";
 import { Card } from "antd";
+import { useAppDispatch } from "core/redux/hooks";
+import { checkedPreviewUrl } from "modules/Playlist/playlistSlice";
 import "./Card.scss";
 
 type Props = {
@@ -7,6 +9,7 @@ type Props = {
     id:string;
     img:string;
     name:string;
+    description?:string;
   };
   currentItemId:string;
   playing: boolean;
@@ -23,7 +26,12 @@ export const CardComponent: FC<Props> = ({
   setPlaying,
   handlePlay,
 }) => {
+  const dispatch = useAppDispatch();
   const handleStop = () => setPlaying(false);
+  const handleStart = () => {
+    dispatch(checkedPreviewUrl())
+    handlePlay(card.id)
+  }
 
   return (
     <div className="card__wrapper">
@@ -45,7 +53,7 @@ export const CardComponent: FC<Props> = ({
         </svg>
       ) : (
         <svg
-        onClick={() => handlePlay(card.id)} 
+        onClick={handleStart} 
         className="card__play" 
         width="51" height="51" 
         fill="#1ED7">

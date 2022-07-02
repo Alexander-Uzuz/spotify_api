@@ -5,7 +5,7 @@ import StopPlayerIcon from 'assets/icons/stopPlayer.svg';
 import PlayPlayerIcon from 'assets/icons/playPlayer.svg';
 import { MusicPlayerContext } from "core/context/PlayerContext";
 import { useAppDispatch } from 'core/redux/hooks';
-import { prevTrack, nextTrack } from 'modules/Playlist/playlistSlice';
+import { prevTrack, nextTrack, checkedPreviewUrl } from 'modules/Playlist/playlistSlice';
 import {Bar} from './components/Bar';
 
 type Props = {
@@ -16,8 +16,12 @@ type Props = {
 export const Turntable:FC<Props> = () => {
   const dispatch = useAppDispatch();
   const {curTime, duration, playing, setPlaying, setClickedTime} = useContext(MusicPlayerContext);
+
   const handlePrevTrack = () => dispatch(prevTrack());
-  const handleNextTrack = () => dispatch(nextTrack());
+  const handleNextTrack = () => {
+    dispatch(nextTrack());
+    dispatch(checkedPreviewUrl())
+  }
 
   return (
     <div className="player__turntable">

@@ -26,11 +26,13 @@ export const Player:FC<Props> = () => {
   }
 
   useEffect(() => {
+    return () => {
       if(currentTrack){
         localStorage.setItem('currentTrack', JSON.stringify(currentTrack));
         localStorage.setItem('flag', flag);
       }
-  },[])
+    }
+  })
 
   const handleRange = (value:number) => audioPlayer.current.volume = value / 100;
   
@@ -45,8 +47,8 @@ export const Player:FC<Props> = () => {
           Your browser does not support the <code>audio</code> element.
         </audio>
         <Song 
-        songName={currentTrack?.name ? currentTrack.name : ""} 
-        songArtist={currentTrack?.artistName ? currentTrack.artistName : ""}
+        songName={currentTrack?.songName ? currentTrack.songName : ""} 
+        songArtist={currentTrack?.artist ? currentTrack.artist : ""}
         images={currentTrack?.img ? currentTrack.img : (flag === "album" ? addImgAlbum() : '')}
         />
         <Turntable/>

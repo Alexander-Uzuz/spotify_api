@@ -1,10 +1,10 @@
-import {BaseSyntheticEvent, FC,MouseEventHandler} from 'react';
+import {FC} from 'react';
 
 
 
 type Props = {
-    curTime:any, 
-    duration:any, 
+    curTime:number, 
+    duration:number, 
     onTimeUpdate:any;
 }
 

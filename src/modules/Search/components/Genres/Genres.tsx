@@ -15,12 +15,15 @@ export const Genres = (props: Props) => {
         <div className="genres">
           <div className="genres__item">
             <Title level={2} className='genres__title'>Hip-hop</Title>
+            <div className="img__container">
             <img src={Pop} alt="" />
-          </div>
-          
+            </div>
+          </div>          
           <div className="genres__item">
             <Title level={2} className='genres__title'>Hip-hop</Title>
+            <div className="img__container">
             <img src={Pop} alt="" />
+            </div>
           </div>
         </div>
       </div>

@@ -26,8 +26,7 @@ export function useAudioPlayer() {
       audio.currentTime = clickedTime;
       setClickedTime(null);
     } 
-
-    // effect cleanup
+    
     return () => {
       audio.removeEventListener("loadeddata", setAudioData);
       audio.removeEventListener("timeupdate", setAudioTime);

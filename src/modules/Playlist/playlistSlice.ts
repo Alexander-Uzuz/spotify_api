@@ -37,6 +37,22 @@ const playlistSlice = createSlice({
                 state.currentTrack.img =  action.payload;
             }
             state.playlist.map(item => item.img = action.payload);
+        },
+        checkedPreviewUrl(state){
+            if(!state.currentTrack?.preview_url && state.currentTrack){
+                const indexCurrentTrack = state.playlist.findIndex(item => item.id === state.currentTrack?.id);
+                
+                const tracksWithPreviewUrl = state.playlist
+                .slice(indexCurrentTrack, state.playlist.length)
+                .filter(track => track.preview_url);
+
+                state.playlist = [
+                    ...state.playlist.slice(0, indexCurrentTrack),
+                    ...tracksWithPreviewUrl
+                ]
+
+                state.currentTrack = state.playlist[indexCurrentTrack]
+            }
         }
     },
     extraReducers:(builder) =>{
@@ -57,10 +73,10 @@ const playlistSlice = createSlice({
         builder.addCase(getPlaylistsItemThunk .fulfilled, (state, action:PayloadAction<any>) => {
             state.playlist = action.payload.items.map((item:any) => {
                 return {
-                    id:item.track.id,
+                    id:item.track.id ? item.track.id : '',
                     preview_url:item.track.preview_url,
-                    name:item.track.name,
-                    artistName:item.track.artists[0].name,
+                    songName:item.track.name,
+                    artist:item.track.artists[0].name,
                     img:item.track.album.images[0].url
                 }
             })  
@@ -71,8 +87,8 @@ const playlistSlice = createSlice({
                 return {
                     id:item.id,
                     preview_url:item.preview_url,
-                    name:item.name,
-                    artistName:item.artists[0].name,
+                    songName:item.name,
+                    artist:item.artists[0].name,
                     img:item.album.images[0].url
                 }
             })     
@@ -82,8 +98,8 @@ const playlistSlice = createSlice({
             state.playlist = action.payload.items.map((item:any) => {
                 return {
                     id:item.id,
-                    name:item.name,
-                    artistName:item.artists[0].name,
+                    songName:item.name,
+                    artist:item.artists[0].name,
                     preview_url:item.preview_url,
                     img:null
                 }
@@ -100,12 +116,8 @@ const playlistSlice = createSlice({
             state.error = action.payload;
             state.loading = false;
         })
-        builder.addCase(getAlbumItemThunk .rejected, (state, action:PayloadAction<any>) => {
-            state.error = action.payload;
-            state.loading = false;
-        })
     }
 })
 
-export const {prevTrack, nextTrack, addImgTrack} = playlistSlice.actions;
+export const {prevTrack, nextTrack, addImgTrack,checkedPreviewUrl} = playlistSlice.actions;
 export default playlistSlice.reducer;

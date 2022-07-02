@@ -2,36 +2,47 @@
     margin-top: 30px;
 
     .browses{
-        display: flex;
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+        grid-template-rows: 1fr 1fr 1fr;
+        gap:15px;
 
         .browse__item{
             display: flex;
             justify-content: space-between;
-            flex-direction: column;
-            min-width: 231px;
-            min-height: 231px;            
+            flex-direction: column;        
             background-color: #27856A;
-            margin-right: 20px;
             border-radius: 10px;
             transition:1s;
+            width:231px;
+            height:231px;
+            padding-top:21px;
+            padding-left:21px;
+            cursor: pointer;
 
 
             .browse__title{
                 color:var(--color-white);
-                padding: 10px;
+
             }
 
-            .browse__img{
-                display: block;
-                position: relative;
+            .img__container{
                 align-self: flex-end;
+
+                img{
+                    mix-blend-mode: luminosity;
+                    width: 112px;
+                    height: 112px;
+                }
             }
+
+
 
 
         }
 
         .browse__item:hover{
-            transform: scale(1.05);
+            transform: scale(1.03);
         }
 
         .browse__img::before{

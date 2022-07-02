@@ -5,8 +5,8 @@ import { IGetFollowingArtistItem } from "./IGetFollowArtistItem";
 interface ITrack{
     id:string,
     preview_url:string,
-    name:string,
-    artistName:string,
+    songName:string,
+    artist:string,
     img:string
 }
 
