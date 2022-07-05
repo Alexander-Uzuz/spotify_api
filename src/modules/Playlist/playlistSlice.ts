@@ -38,40 +38,51 @@ const playlistSlice = createSlice({
             }
             state.playlist.map(item => item.img = action.payload);
         },
-        checkedPreviewUrl(state){
-            if(!state.currentTrack?.preview_url && state.currentTrack){
-                const indexCurrentTrack = state.playlist.findIndex(item => item.id === state.currentTrack?.id);
+        // checkedPreviewUrl(state){
+        //     if(!state.currentTrack?.preview_url && state.currentTrack){
+
+        //         console.log(state.playlist, 'playlist')
+
+        //         const indexCurrentTrack = state.playlist.findIndex(item => item.id === state.currentTrack?.id);
                 
-                const tracksWithPreviewUrl = state.playlist
-                .slice(indexCurrentTrack, state.playlist.length)
-                .filter(track => track.preview_url);
+        //         const tracksWithPreviewUrl = state.playlist
+        //         .slice(indexCurrentTrack, state.playlist.length)
+        //         .filter(track => track.preview_url);
 
-                state.playlist = [
-                    ...state.playlist.slice(0, indexCurrentTrack),
-                    ...tracksWithPreviewUrl
-                ]
+        //         state.playlist = [
+        //             ...state.playlist.slice(0, indexCurrentTrack),
+        //             ...tracksWithPreviewUrl
+        //         ]
 
-                state.currentTrack = state.playlist[indexCurrentTrack]
-            }
-        }
+        //         state.currentTrack = state.playlist[indexCurrentTrack]
+        //     }
+        // }
     },
     extraReducers:(builder) =>{
         builder.addCase(getPlaylistsItemThunk .pending, (state => {
             state.error = null;
             state.loading = true;
+            state.playlist = [];
+            state.currentTrack = null;
         }))
         builder.addCase(getArtistItemThunk .pending, (state => {
             state.error = null;
             state.loading = true;
+            state.playlist = [];
+            state.currentTrack = null;
         }))
         builder.addCase(getAlbumItemThunk .pending, (state => {
             state.error = null;
             state.loading = true;
+            state.playlist = [];
+            state.currentTrack = null;
         }))
 
 
         builder.addCase(getPlaylistsItemThunk .fulfilled, (state, action:PayloadAction<any>) => {
-            state.playlist = action.payload.items.map((item:any) => {
+            const arr = action.payload.items.filter((item:any) => item.track?.preview_url);
+
+            state.playlist = arr.map((item:any) => {
                 return {
                     id:item.track.id ? item.track.id : '',
                     preview_url:item.track.preview_url,
@@ -119,5 +130,5 @@ const playlistSlice = createSlice({
     }
 })
 
-export const {prevTrack, nextTrack, addImgTrack,checkedPreviewUrl} = playlistSlice.actions;
+export const {prevTrack, nextTrack, addImgTrack } = playlistSlice.actions;
 export default playlistSlice.reducer;

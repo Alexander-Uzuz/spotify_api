@@ -8,6 +8,8 @@ const initialState:IInitialState ={
     error:null,
     loading:false,
     currentItemId:'',
+    offset:0,
+    total:0
 }
 
 const genreSlice = createSlice({
@@ -16,24 +18,40 @@ const genreSlice = createSlice({
     reducers:{
         changeCurrentItem(state, action:PayloadAction<string>){
             state.currentItemId = action.payload;
+        },
+        clearPlaylist(state){
+            state.playlistGenre = [];
+            state.offset = 0;
+            state.total = 0;
         }
     },
     extraReducers:(builder) =>{
         builder.addCase(getCategorysPlaylistsThunk .pending, (state => {
             state.error = null;
             state.loading = true;
-            state.playlistGenre = [];
+            state.total = 0;
         }))
 
         builder.addCase(getCategorysPlaylistsThunk .fulfilled, ((state, action:PayloadAction<IGetCategorysPlaylists>) => {
-            state.playlistGenre = action.payload.playlists.items.map(item => {
-                return {
-                    description:item.description,
-                    id:item.id,
-                    name:item.name,
-                    img:item.images[0].url
-                }
-            })
+                state.total = action.payload.playlists.total;
+                state.offset = state.offset + 12;
+                const playlist = action.payload.playlists.items.map(item => {
+                    return {
+                        description:item.description,
+                        id:item.id,
+                        name:item.name,
+                        img:item.images[0].url
+                    }
+                })
+
+                    state.playlistGenre = [
+                        ...state.playlistGenre, 
+                        ...playlist,                        
+                    ];
+
+    
+                state.loading = false;
+                console.log(state.playlistGenre.length)
         }))
 
         builder.addCase(getCategorysPlaylistsThunk .rejected, (state, action:PayloadAction<any>) => {
@@ -43,5 +61,5 @@ const genreSlice = createSlice({
     }
 })
 
-export const {changeCurrentItem} = genreSlice.actions;
+export const {changeCurrentItem,clearPlaylist} = genreSlice.actions;
 export default genreSlice.reducer;

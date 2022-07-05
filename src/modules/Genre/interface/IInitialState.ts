@@ -3,11 +3,13 @@ export interface IInitialState{
     error:null | string,
     loading:boolean,
     currentItemId:string;
+    offset:number;
+    total:number;
 }
 
 export interface IPlaylistGenreItem{
     description:string;
-    name:string;
     id:string;
+    name:string;
     img:string;
 }

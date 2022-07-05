@@ -20,7 +20,7 @@ export const Player:FC<Props> = () => {
   const dispatch = useAppDispatch();
 
   const addImgAlbum = () =>{
-    const img = playlist.find(item => item.id === currentItemId)?.img;
+    const img = playlist.find((item:any) => item.id === currentItemId)?.img;
     dispatch(addImgTrack(img ? img : ''))
     return img ? img : ''
   }

@@ -3,7 +3,7 @@ import { getCategorysPlaylists } from "api/search/searchRequest";
 
 export const getCategorysPlaylistsThunk = createAsyncThunk(
     'search/getCategorysPlaylists',
-    async function(data:{token:string, id:string}, {rejectWithValue}){
+    async function(data:{token:string, id:string, offset:number}, {rejectWithValue}){
             try{
                 const response = await getCategorysPlaylists(data)
 

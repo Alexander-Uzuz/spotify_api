@@ -1,7 +1,6 @@
 import { FC } from "react";
 import { Card } from "antd";
 import { useAppDispatch } from "core/redux/hooks";
-import { checkedPreviewUrl } from "modules/Playlist/playlistSlice";
 import "./Card.scss";
 
 type Props = {
@@ -29,7 +28,6 @@ export const CardComponent: FC<Props> = ({
   const dispatch = useAppDispatch();
   const handleStop = () => setPlaying(false);
   const handleStart = () => {
-    dispatch(checkedPreviewUrl())
     handlePlay(card.id)
   }
 
