@@ -8,12 +8,14 @@ interface ITrack{
     songName:string,
     artist:string,
     img:string
+    albumName?:string;
 }
 
 export interface IInitialState{
     playlist:ITrack[],
     currentTrack:ITrack | null,
     error:null | string,
+    search:boolean;
     loading:boolean;
     flag:string;
 }

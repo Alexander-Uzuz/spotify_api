@@ -25,11 +25,9 @@ export const CardComponent: FC<Props> = ({
   setPlaying,
   handlePlay,
 }) => {
-  const dispatch = useAppDispatch();
   const handleStop = () => setPlaying(false);
-  const handleStart = () => {
-    handlePlay(card.id)
-  }
+  const handleStart = () => handlePlay(card.id)
+  
 
   return (
     <div className="card__wrapper">

@@ -5,7 +5,7 @@ import { IGetBrowseCategories } from "./interfaces/IGetBrowseCategories";
 import {getSearchThunk, getBrowseCategoriesThunk } from './SearchThunk';
 
 const initialState:IInitialState ={
-    searchData:null,
+    searchData:[],
     browseCategories:[],
     error:null,
     loading:false,
@@ -31,7 +31,16 @@ const searchSlice = createSlice({
 
 
         builder.addCase(getSearchThunk .fulfilled, ((state,action:PayloadAction<IGetSearch>) => {
-            state.searchData = action.payload;
+            state.searchData = action.payload.tracks.items.map(item => {
+                return {
+                    id:item.id,
+                    preview_url:item.preview_url,
+                    songName:item.name,
+                    albumName:item.album.name,
+                    artist:item.artists[0].name,
+                    img:item.album.images[2].url,
+                }
+            })            
         }))
         builder.addCase(getBrowseCategoriesThunk .fulfilled, ((state, action:PayloadAction<IGetBrowseCategories>) => {
             state.browseCategories = action.payload.categories.items.map(item => {
@@ -49,7 +58,7 @@ const searchSlice = createSlice({
 
         builder.addCase(getSearchThunk .rejected, (state, action:PayloadAction<any>) => {
             state.error = action.payload;
-            state.searchData = null;
+            state.searchData = [];
             state.loading = false;
         })
         builder.addCase(getBrowseCategoriesThunk .rejected, ((state, action:PayloadAction<any>) => {

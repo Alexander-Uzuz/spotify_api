@@ -1,20 +1,58 @@
-import {FC} from 'react';
+import {FC, useContext} from 'react';
+import { MusicPlayerContext } from 'core/context/PlayerContext';
+import Play from 'assets/icons/playTable.svg';
 import { Table } from 'antd';
 import type { ColumnsType } from 'antd/lib/table';
-import {ReactComponent as TimeIcon} from 'assets/icons/time.svg';
-import { useAppSelector } from 'core/redux/hooks';
-import {IGetSearchItem} from '../../interfaces/IGetSearch';
+import { useAppSelector, useAppDispatch } from 'core/redux/hooks';
+import {playSongTable} from 'modules/Playlist/playlistSlice';
+import { ISearchDataItem } from 'modules/Search/interfaces/IInitialState';
 import './SongsTable.scss';
 
 
 type Props = {}
 
-  const columns: ColumnsType<IGetSearchItem> = [
+ 
+  
+export const SongsTable:FC<Props> = () => {
+  const {playlist, currentTrack} = useAppSelector(state => state.playlist);
+  const { playing, setPlaying } = useContext(MusicPlayerContext);
+  const dispatch = useAppDispatch();
+
+  const handleStop = () => {
+      setPlaying(false)
+    };
+  const handleStart = (data:ISearchDataItem) => {
+    dispatch(playSongTable(data.id))
+    setPlaying(true)
+  };
+
+  const columns: ColumnsType<ISearchDataItem> = [
     {
       title: '#',
       dataIndex: 'key',
       key: '1',
-      render: (value,data,index) => <p className='songsTable__text' key={index + 1}>{index + 1}</p>,
+      render: (_,data,index) => <div>
+        <p style={{width:'30px', height:'30px', display:currentTrack?.id === data.id && playing ? 'none' : ''}} className='songsTable__text songsTable__index' key={index + 1}>{index + 1}</p>
+        {playing && data.id === currentTrack?.id? (
+        <svg
+          style={{display:'block'}}
+          onClick={handleStop}
+          className="card__play"
+          width="30"
+          height="30"
+          viewBox="0 0 64 64"
+          xmlns="http://www.w3.org/2000/svg"
+          aria-hidden="true"
+          role="img"
+          preserveAspectRatio="xMidYMid meet"
+        >
+          <circle cx="32" cy="32" r="30" fill="#4fd1d9"></circle>
+          <path fill="#fff" d="M17 17h30v30H17z"></path>
+        </svg>
+      ) : (
+        <img src={Play} alt="" className='card__play' onClick={() => handleStart(data)} style={{width:'30px', height:'30px'}}/>
+      )}
+      </div>,
     },
     {
       title: 'Название',
@@ -22,10 +60,10 @@ type Props = {}
       render:(item, index) => {
         return (
           <div className='name__container' key={`${index}`}>
-            <img className='songsTable__img' src={item.album.images ? item.album.images[2].url : ''} alt="" />
+            <img className='songsTable__img' src={item.albumName ? item.img : ''} alt="" />
             <div>
-              <p className='songsTable__text'>{item.name}</p>
-              <p className='songsTable__text'>{item.album.artists[0].name}</p>
+              <p className='songsTable__text'>{item.songName}</p>
+              <p className='songsTable__text'>{item.artist}</p>
             </div>
           </div>
         )
@@ -36,7 +74,7 @@ type Props = {}
       title: 'Альбом',
       dataIndex: 'album',
       key: '3',
-      render:(item) => <p className='songsTable__text' key={item.name}>{item.name}</p>
+      render:(_,item) => <p className='songsTable__text' key={item.id}>{item?.albumName}</p>
     },
     {
       title: 'Время',
@@ -47,12 +85,9 @@ type Props = {}
       }
     },
   ];
-  
-export const SongsTable:FC<Props> = () => {
-  const {searchData} = useAppSelector(state => state.search)
 
 
   return (
-    <Table className='songsTable' columns={columns} dataSource={searchData?.tracks.items} pagination={false} rowKey='id'/>
+    <Table className='songsTable' columns={columns} dataSource={playlist} pagination={false} rowKey='id'/>
   )
 }

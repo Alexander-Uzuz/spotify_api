@@ -7,11 +7,11 @@ import { SongsTable } from "./components/SongsTable/SongsTable";
 type Props = {};
 
 export const Search = (props: Props) => {
-  const { searchData } = useAppSelector((state) => state.search);
+  const {search} = useAppSelector(state => state.playlist)
 
   return (
     <div>
-      {searchData ? (
+      {search ? (
         <div className="search__active">
           <SongsTable />
         </div>

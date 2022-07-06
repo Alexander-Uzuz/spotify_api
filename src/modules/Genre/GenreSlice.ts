@@ -51,7 +51,6 @@ const genreSlice = createSlice({
 
     
                 state.loading = false;
-                console.log(state.playlistGenre.length)
         }))
 
         builder.addCase(getCategorysPlaylistsThunk .rejected, (state, action:PayloadAction<any>) => {

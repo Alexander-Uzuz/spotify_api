@@ -10,8 +10,20 @@
     color:var(--color-white);
 }
 
+.songsTable__index{
+    margin-bottom: 0 !important;
+}
+
 .ant-table-cell.ant-table-cell-row-hover{
     background-color: var(--color-smallCard) !important;
+}
+
+.ant-table-row.ant-table-row-level-0:hover p.songsTable__index{
+    display: none !important;
+}
+
+.ant-table-row.ant-table-row-level-0:hover .card__play{
+    display: block !important;
 }
 
 .ant-table-tbody>tr>td{
@@ -28,5 +40,9 @@
     background-color: #121212 !important;
     color:var(--color-white) !important;
     border-bottom: 0px !important;
+}
+
+.card__play{
+    display: none;
 }
 

@@ -1,4 +1,5 @@
-import { FC, useContext, useEffect, useState } from "react";
+import { FC, useContext, useEffect } from "react";
+import { useInfinityScroll } from "common/hooks/useInfinityScroll";
 import { MusicPlayerContext } from "core/context/PlayerContext";
 import { Typography, List, Spin } from "antd";
 import { CardComponent } from "common/components/Cards/components/Card/Card";
@@ -24,13 +25,15 @@ const { Title } = Typography;
 
 export const Cards: FC<Props> = (props) => {
   const { title, loading, playlist, currentItemId, handlePlayer } = props;
-  const token = localStorage.getItem("token") || "";
-  const { id } = useParams();
-  const {total, offset} = useAppSelector(state => state.genre)
   const { playing, setPlaying } = useContext(MusicPlayerContext);
-  const [loadingData, setLoadingData] = useState(false);
+  const token = localStorage.getItem("token") || "";
+  const {loadingData, setLoadingData} = useInfinityScroll();
   const handlePlay = (id: string) => handlePlayer(id);
   const dispatch = useAppDispatch();
+  const { id } = useParams();
+  
+  const {total, offset} = useAppSelector(state => state.genre)
+
 
   useEffect(() => {
     if (loadingData && total > offset) {
@@ -42,24 +45,6 @@ export const Cards: FC<Props> = (props) => {
       },1500)
     }
   }, [loadingData]);
-
-  useEffect(() => {
-    document.addEventListener("scroll", handleScroll);
-
-    return () => {
-      document.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
-
-  const handleScroll = (e: any) => {
-    if (
-      e.target.documentElement.scrollHeight -
-        (e.target.documentElement.scrollTop + window.innerHeight) <
-      100
-    ) {
-      setLoadingData(true);
-    }
-  };
 
   return (
     <>
