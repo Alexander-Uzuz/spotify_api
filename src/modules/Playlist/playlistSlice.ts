@@ -3,6 +3,7 @@ import { IInitialState } from "./interfaces/IPlaylist";
 import {getPlaylistsItemThunk, getArtistItemThunk, getAlbumItemThunk} from './playlistThunk';
 import { getSearchThunk } from "modules/Search/SearchThunk";
 import { IGetSearch } from "modules/Search/interfaces/IGetSearch";
+import { setPending } from "common/helpers/helpersSlice";
 
 const initialState:IInitialState ={
     playlist:[],
@@ -52,23 +53,10 @@ const playlistSlice = createSlice({
         }
     },
     extraReducers:(builder) =>{
-        builder.addCase(getPlaylistsItemThunk .pending, (state => {
-            state.error = null;
-            state.loading = true;
-        }))
-        builder.addCase(getArtistItemThunk .pending, (state => {
-            state.error = null;
-            state.loading = true;
-        }))
-        builder.addCase(getAlbumItemThunk .pending, (state => {
-            state.error = null;
-            state.loading = true;
-        }))
-        builder.addCase(getSearchThunk .pending, (state => {
-            state.error = null;
-            state.loading = true;
-        }))
-
+        builder.addCase(getPlaylistsItemThunk .pending, setPending)
+        builder.addCase(getArtistItemThunk .pending, setPending)
+        builder.addCase(getAlbumItemThunk .pending, setPending)
+        builder.addCase(getSearchThunk .pending, setPending)
 
         builder.addCase(getPlaylistsItemThunk .fulfilled, (state, action:PayloadAction<any>) => {
             state.search = false;

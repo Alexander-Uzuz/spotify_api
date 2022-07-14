@@ -11,6 +11,6 @@ export const RequireAuth = (props: Props) => {
     if(token){
         return <Outlet/>
     }else{
-        return <Navigate to='/signIn'/>
+        return <Navigate to='/home'/>
     }
 }

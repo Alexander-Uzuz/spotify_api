@@ -4,6 +4,8 @@ import libSlice from 'modules/Library/LibrarySlice';
 import playlistSlice from 'modules/Playlist/playlistSlice';
 import searchSlice from 'modules/Search/SearchSlice';
 import genreSlice from 'modules/Genre/GenreSlice';
+import homeSlice from 'modules/Home/HomeSlice';
+
 
 
 export const rootReducer = combineReducers({
@@ -12,6 +14,7 @@ export const rootReducer = combineReducers({
    playlist:playlistSlice,
    search:searchSlice,
    genre:genreSlice,
+   home:homeSlice,
 });
 
 export type RootState = ReturnType<typeof rootReducer>;

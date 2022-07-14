@@ -1,10 +1,15 @@
 export interface IInitialState{
+  signInCards:{
+    img:string;
+    id:string;
+    name:string;
+  }[];
     user:{
         username:string | null;
         id:string | null;
         avatarUrl:string | null;
     },
-    error:string | null;
+    _error:string | null;
     loading:boolean;
 }
 

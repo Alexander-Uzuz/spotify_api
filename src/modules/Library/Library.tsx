@@ -24,7 +24,7 @@ export const Library: FC<Props> = () => {
   const dispatch = useAppDispatch();
   const token = localStorage.getItem("token");
   const { pathname } = useLocation();
-  const { playlist, error, loading, flag, currentItemId } = useAppSelector(
+  const { playlist, error, loading, flag, currentItemId, offset, total } = useAppSelector(
     (state) => state.lib
   );
 
@@ -78,44 +78,8 @@ export const Library: FC<Props> = () => {
         playlist={playlist}
         currentItemId={currentItemId}
         handlePlayer={handlePlayer}
+        total={total} 
+        offset={offset}
       />
   );
 };
-
-
-      {/* {!loading ? (
-        <>
-          <Title level={2} className="content__title">
-            {pathname === "/library/playlists"
-              ? "Playlists"
-              : pathname === "/library/artists"
-              ? "Artists"
-              : "Albums"}
-          </Title>
-          <List
-            grid={{
-              gutter: 16,
-              xs: 1,
-              sm: 2,
-              md: 4,
-              lg: 4,
-              xl: 4,
-              xxl: 6,
-            }}
-            dataSource={playlist}
-            renderItem={(item) => (
-              <List.Item>
-                <CardComponent
-                  card={item}
-                  playing={playing}
-                  setPlaying={setPlaying}
-                  handlePlay={handlePlay}
-                  currentItemId={currentItemId}
-                />
-              </List.Item>
-            )}
-          />
-        </>
-      ) : (
-        <Spin indicator={<SpinnerLogo style={{fontSize:'200px'}}/>} className="spin"/>
-      )} */}

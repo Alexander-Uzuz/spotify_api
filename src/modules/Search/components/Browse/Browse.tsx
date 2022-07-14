@@ -5,7 +5,6 @@ import { getBrowseCategoriesThunk } from "modules/Search/SearchThunk";
 import { useAppDispatch, useAppSelector } from "core/redux/hooks";
 import {getCategorysPlaylistsThunk} from "modules/Genre/GenreThunk";
 import { clearPlaylist } from "modules/Genre/GenreSlice";
-import PodcastsImg from "assets/images/podcasts.png";
 import "./Browse.scss";
 
 type Props = {};

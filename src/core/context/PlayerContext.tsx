@@ -34,7 +34,6 @@ const MusicPlayerProvider = (props: any) => {
       setClickedTime(null);
     }
 
-    // effect cleanup
     return () => {
       audio.removeEventListener("loadeddata", setAudioData);
       audio.removeEventListener("timeupdate", setAudioTime);

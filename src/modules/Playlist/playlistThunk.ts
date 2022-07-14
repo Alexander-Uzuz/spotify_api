@@ -4,7 +4,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 
 export const getPlaylistsItemThunk = createAsyncThunk(
     'playlist/getPlaylistsItem',
-    async function(data:{token:string | null,id:string}, {rejectWithValue}){
+    async function(data:{token:string | null,id:string, type?:string}, {rejectWithValue}){
         if(typeof data.token === 'string'){
             try{
                 const response = await getPlaylistItem(data);

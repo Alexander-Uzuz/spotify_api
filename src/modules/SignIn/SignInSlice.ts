@@ -5,12 +5,13 @@ import { IInitialState, IActionMe} from "./interfaces/ISignIn";
 
 
 const initialState:IInitialState = {
+    signInCards:[],
     user:{
         username:null,
         id:null,
         avatarUrl:null
     },
-    error:null,
+    _error:null,
     loading:false,
 };
 
@@ -25,7 +26,7 @@ const userSlice = createSlice({
     },
     extraReducers:(builder) =>{
         builder.addCase(signInThunk .pending, state =>{
-            state.error = null;
+            state._error = null;
             state.loading = true;
         })
         builder.addCase(signInThunk .fulfilled, (state, action:PayloadAction<IActionMe>) =>{
@@ -35,7 +36,7 @@ const userSlice = createSlice({
             state.user.avatarUrl = action.payload.images[0].url;
         })
         builder.addCase(signInThunk .rejected, (state, action:PayloadAction<any>) => {
-            state.error = action.payload;
+            state._error = action.payload;
             state.loading = false;
             
         })

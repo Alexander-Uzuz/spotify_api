@@ -4,6 +4,8 @@ export interface IInitialState {
   currentItemId: string;
   error: null | string;
   loading: boolean;
+  offset:number;
+  total:number;
 }
 
 interface IItem {

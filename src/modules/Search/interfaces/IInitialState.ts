@@ -1,10 +1,11 @@
 import { IGetSearch } from "./IGetSearch";
 
 export interface IInitialState{
-    searchData:ISearchDataItem[];
     browseCategories:{img:string,id:string,name:string}[];
     error:null | string;
     loading:boolean;
+    offset:number;
+    total:number;
 }
 
 export interface ISearchDataItem{

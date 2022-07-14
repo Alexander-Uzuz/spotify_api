@@ -49,7 +49,6 @@ const genreSlice = createSlice({
                         ...playlist,                        
                     ];
 
-    
                 state.loading = false;
         }))
 

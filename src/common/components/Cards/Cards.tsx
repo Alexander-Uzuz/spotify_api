@@ -4,11 +4,13 @@ import { MusicPlayerContext } from "core/context/PlayerContext";
 import { Typography, List, Spin } from "antd";
 import { CardComponent } from "common/components/Cards/components/Card/Card";
 import { ReactComponent as SpinnerLogo } from "assets/icons/spinner.svg";
-import { useAppDispatch, useAppSelector } from "core/redux/hooks";
+import { useAppDispatch } from "core/redux/hooks";
 import { useParams } from "react-router-dom";
-import { getCategorysPlaylistsThunk } from "modules/Genre/GenreThunk";
 
 type Props = {
+  getCards?:(data:{token:string, id:string, offset:number}) => any;
+  total:number;
+  offset:number;
   title?: string;
   loading: boolean;
   playlist: {
@@ -24,27 +26,25 @@ type Props = {
 const { Title } = Typography;
 
 export const Cards: FC<Props> = (props) => {
-  const { title, loading, playlist, currentItemId, handlePlayer } = props;
+  const { title, loading, playlist, currentItemId, handlePlayer, total,offset, getCards } = props;
   const { playing, setPlaying } = useContext(MusicPlayerContext);
-  const token = localStorage.getItem("token") || "";
   const {loadingData, setLoadingData} = useInfinityScroll();
+  const token = localStorage.getItem("token") || "";
+  const { id } = useParams();
   const handlePlay = (id: string) => handlePlayer(id);
   const dispatch = useAppDispatch();
-  const { id } = useParams();
-  
-  const {total, offset} = useAppSelector(state => state.genre)
-
 
   useEffect(() => {
-    if (loadingData && total > offset) {
+    if (loadingData && total > offset && getCards) {
       setTimeout(async () => {
         await dispatch(
-          getCategorysPlaylistsThunk({ token, id: id ? id : "", offset })
+          getCards({ token, id: id ? id : "", offset })
         );
         setLoadingData(false);
       },1500)
     }
   }, [loadingData]);
+
 
   return (
     <>
@@ -88,3 +88,4 @@ export const Cards: FC<Props> = (props) => {
     </>
   );
 };
+

@@ -4,6 +4,7 @@ import { MusicPlayerContext } from "core/context/PlayerContext";
 import { changeCurrentItem } from "modules/Genre/GenreSlice";
 import { Cards } from 'common/components/Cards/Cards';
 import {getPlaylistsItemThunk} from 'modules/Playlist/playlistThunk';
+import {getCategorysPlaylistsThunk} from './GenreThunk';
 
 
 type Props = {}
@@ -12,7 +13,9 @@ export const Genre:FC<Props> = () => {
   const {playlistGenre, currentItemId, loading} = useAppSelector(state => state.genre)
   const {setPlaying} = useContext(MusicPlayerContext);
   const dispatch = useAppDispatch();
-  const token = localStorage.getItem('token');
+  const token = localStorage.getItem("token") || "";
+  const {total, offset} = useAppSelector(state => state.genre)
+
 
   const handlePlay = (id:string) => {
     dispatch(changeCurrentItem(id));
@@ -21,6 +24,13 @@ export const Genre:FC<Props> = () => {
   }
 
   return (
-      <Cards loading={loading} playlist={playlistGenre} currentItemId={currentItemId} handlePlayer={handlePlay}/>
+      <Cards 
+      getCards={getCategorysPlaylistsThunk} 
+      loading={loading} 
+      playlist={playlistGenre} 
+      currentItemId={currentItemId} 
+      handlePlayer={handlePlay} 
+      total={total} 
+      offset={offset}/>
   )
 }

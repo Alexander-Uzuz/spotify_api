@@ -41,14 +41,14 @@ export const Player:FC<Props> = () => {
       <div className="player__container">
         <audio ref={audioPlayer} 
         id="audio" 
-        src={currentTrack?.preview_url}>
+        src={currentTrack?.preview_url ? currentTrack.preview_url : './song.mp3'}>
           <source 
-          src={currentTrack?.preview_url} />
+          src={currentTrack?.preview_url ? currentTrack.preview_url : './song.mp3'} />
           Your browser does not support the <code>audio</code> element.
         </audio>
         <Song 
-        songName={currentTrack?.songName ? currentTrack.songName : ""} 
-        songArtist={currentTrack?.artist ? currentTrack.artist : ""}
+        songName={currentTrack?.songName ? currentTrack.songName : "Song"} 
+        songArtist={currentTrack?.artist ? currentTrack.artist : "Artist"}
         images={currentTrack?.img ? currentTrack.img : (flag === "album" ? addImgAlbum() : '')}
         />
         <Turntable/>

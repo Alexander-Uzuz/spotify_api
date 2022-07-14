@@ -1,8 +1,7 @@
-import { useEffect, FC, BaseSyntheticEvent } from "react";
+import { useEffect, FC, BaseSyntheticEvent, useState } from "react";
 import { Button, Input } from "antd";
-import { useNavigate, useParams, useLocation } from "react-router-dom";
+import { useNavigate, useParams, useLocation, useSearchParams } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "core/redux/hooks";
-import { signInThunk } from "modules/SignIn/SignInThunk";
 import { Arrows } from "./components/Arrows/Arrows";
 import {ReactComponent as SearchIcon} from 'assets/icons/search.svg';
 import {ReactComponent as CloseIcon} from 'assets/icons/close.svg';
@@ -21,15 +20,22 @@ export const HeaderComponent:FC<Props> = (props) => {
   const {pathname} = useLocation();
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const { user, error } = useAppSelector((state) => state.signIn);
+  const { user, _error } = useAppSelector((state) => state.signIn);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const searchQuery = searchParams.get('q') || '';
   const token = localStorage.getItem('token');
 
 
+
   const debouncedSearch = debounce(async (searchValue:string) => {
+    setSearchParams({q:searchValue})
     await dispatch(getSearchThunk({token,searchValue}))
   },300);
 
-  const handleSearch = (e:BaseSyntheticEvent) => debouncedSearch(e.target.value);
+  const handleSearch = (e:BaseSyntheticEvent) => {
+    debouncedSearch(e.target.value);
+  }
+  
 
   useEffect(() => {
     return () => {
@@ -37,28 +43,6 @@ export const HeaderComponent:FC<Props> = (props) => {
     }
   },[debouncedSearch])
 
-
-  useEffect(() => {
-    if (!error) {
-      (async function () {
-        const token = window.localStorage.getItem("token");
-        const hash = window.location.hash;
-        window.location.hash = "";
-        if (!token && hash) {
-          const _token = hash.split("&")[0].split("=")[1];
-          window.localStorage.setItem("token", _token);
-          await dispatch(signInThunk(_token));
-          navigate("/home");
-        }
-        if (token) {
-          await dispatch(signInThunk(token));
-          navigate("/home");
-        }
-      })();
-    } else {
-      localStorage.removeItem("token");
-    }
-  }, []);
 
   return (
     <>

@@ -1,0 +1,16 @@
+.ant-modal-content{
+    background: none !important;
+    .signIn__modal_body{
+        display: flex;
+        align-items: center;
+    
+        .signIn__modal_content{
+            margin-left: 50px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+    }
+}
+

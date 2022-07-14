@@ -1,5 +1,5 @@
 import {FC, useState} from 'react';
-import { Menu, Avatar, Typography, Dropdown, MenuProps, Button } from "antd";
+import { Menu, Avatar, Typography, Dropdown, MenuProps } from "antd";
 import AvatarImg from "assets/images/avatar.png";
 import ProfileArrow from "assets/icons/profile__arrow.svg";
 import './Profile.scss'
@@ -13,13 +13,19 @@ type Props = {
 }
 
 const { Title } = Typography;
+
+const handleLogout = () => {
+  localStorage.removeItem('token');
+  window.location.reload();
+}
+
 const items: MenuProps["items"] = [
+  // {
+  //   label: <p className="dropdown__menu-item">Profile</p>,
+  //   key: "setting",
+  // },
   {
-    label: <p className="dropdown__menu-item">Profile</p>,
-    key: "setting",
-  },
-  {
-    label: <p className="dropdown__menu-item">Logout</p>,
+    label: <p className="dropdown__menu-item" onClick={handleLogout}>Logout</p>,
     key: "exit",
   },
 ];
