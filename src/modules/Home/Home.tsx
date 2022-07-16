@@ -23,14 +23,11 @@ export const Home: FC<Props> = (props) => {
   const token = localStorage.getItem("token") || "";
   const dispatch = useAppDispatch();
 
-  console.log("home");
-
   useEffect(() => {
     const hash = window.location.hash;
     const _token = hash.split("&")[0].split("=")[1];
     if (!_error) {
       (async function () {
-        console.log('Ошибки нет')
         window.location.hash = "";
         if (!token && hash) {
           window.localStorage.setItem("token", _token);
@@ -41,10 +38,9 @@ export const Home: FC<Props> = (props) => {
         }
       })();
     } else {
-      console.log('Ошибка есть')
       localStorage.removeItem("token");
     }
-  }, []);
+  }, [_error]);
 
   useEffect(() => {
     if (user.id) {

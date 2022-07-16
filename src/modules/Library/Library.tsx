@@ -49,7 +49,9 @@ export const Library: FC<Props> = () => {
     }
   }, [pathname]);
 
-  const handlePlayer = useCallback((id: string) => {
+  const handlePlayer = (id: string) => {
+    console.log(flag,'flag')
+
     dispatch(changeCurrentItem(id));
     const data = { token, id };
 
@@ -63,7 +65,7 @@ export const Library: FC<Props> = () => {
       dispatch(getAlbumItemThunk(data));
     }
     setPlaying(true);
-  },[flag])
+  }
 
   return (
       <Cards

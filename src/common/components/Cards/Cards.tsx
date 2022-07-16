@@ -31,10 +31,8 @@ const CardsInner: FC<Props> = (props) => {
   const {loadingData, setLoadingData} = useInfinityScroll();
   const token = localStorage.getItem("token") || "";
   const { id } = useParams();
-  const handlePlay = useCallback((id: string) => handlePlayer(id),[id])
+  const handlePlay = (id:string) => handlePlayer(id);
   const dispatch = useAppDispatch();
-
-  console.log('cards render')
 
   useEffect(() => {
     if (loadingData && total > offset && getCards) {
