@@ -21,7 +21,11 @@ const userSlice = createSlice({
     initialState,
     reducers:{
         removeUser(state){
-
+            state.user = {
+                username : null,
+                id:null,
+                avatarUrl:null
+            }
         }
     },
     extraReducers:(builder) =>{

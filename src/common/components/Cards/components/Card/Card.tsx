@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, memo, useCallback } from "react";
 import { Card } from "antd";
 import { useAppDispatch } from "core/redux/hooks";
 import "./Card.scss";
@@ -18,7 +18,7 @@ type Props = {
 
 const { Meta } = Card;
 
-export const CardComponent: FC<Props> = ({
+const CardComponentInner: FC<Props> = ({
   card,
   playing,
   currentItemId,
@@ -26,7 +26,9 @@ export const CardComponent: FC<Props> = ({
   handlePlay,
 }) => {
   const handleStop = () => setPlaying(false);
-  const handleStart = () => handlePlay(card.id)
+  const handleStart = () => handlePlay(card.id);
+
+  // console.log(card,'card')
   
 
   return (
@@ -76,3 +78,5 @@ export const CardComponent: FC<Props> = ({
     </div>
   );
 };
+
+export const CardComponent =  memo(CardComponentInner);

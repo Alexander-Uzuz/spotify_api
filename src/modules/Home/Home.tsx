@@ -1,4 +1,4 @@
-import { FC, useEffect, useContext } from "react";
+import { FC, useEffect, useContext, useCallback } from "react";
 import { Typography } from "antd";
 import { MusicPlayerContext } from "core/context/PlayerContext";
 import { useAppSelector } from "core/redux/hooks";
@@ -18,16 +18,19 @@ type Props = {};
 export const Home: FC<Props> = (props) => {
   const { currentItemId, featuredPlaylist, loading, offset, total } =
     useAppSelector((state) => state.home);
-  const { _error, user } = useAppSelector((state) => state.signIn);
   const { setPlaying } = useContext(MusicPlayerContext);
+  const { _error, user } = useAppSelector((state) => state.signIn);
   const token = localStorage.getItem("token") || "";
   const dispatch = useAppDispatch();
+
+  console.log("home");
 
   useEffect(() => {
     const hash = window.location.hash;
     const _token = hash.split("&")[0].split("=")[1];
     if (!_error) {
       (async function () {
+        console.log('Ошибки нет')
         window.location.hash = "";
         if (!token && hash) {
           window.localStorage.setItem("token", _token);
@@ -38,6 +41,7 @@ export const Home: FC<Props> = (props) => {
         }
       })();
     } else {
+      console.log('Ошибка есть')
       localStorage.removeItem("token");
     }
   }, []);

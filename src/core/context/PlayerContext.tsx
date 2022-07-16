@@ -1,13 +1,12 @@
-import { createContext, useState, useEffect } from "react";
+import { createContext, useState, useEffect, useCallback } from "react";
 
 const MusicPlayerContext = createContext<any>(null);
 
-const MusicPlayerProvider = (props: any) => {
+const MusicPlayerProvider = (props:any) => {
   const [duration, setDuration] = useState<any>();
   const [curTime, setCurTime] = useState<any>();
   const [playing, setPlaying] = useState(false);
   const [clickedTime, setClickedTime] = useState<any>();
-
 
   useEffect(() => {
     const audio: any = document.getElementById("audio");
@@ -19,7 +18,7 @@ const MusicPlayerProvider = (props: any) => {
     const setAudioData = () => {
       setDuration(audio.duration);
       setCurTime(audio.currentTime);
-    };
+    }
 
     const setAudioTime = () => setCurTime(audio.currentTime);
 
@@ -39,6 +38,8 @@ const MusicPlayerProvider = (props: any) => {
       audio.removeEventListener("timeupdate", setAudioTime);
     };
   });
+
+
 
 
   return (

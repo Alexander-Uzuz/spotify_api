@@ -1,4 +1,4 @@
-import { FC, useEffect, useContext } from "react";
+import { FC, useEffect, useContext, useCallback } from "react";
 import { useAppSelector, useAppDispatch } from "core/redux/hooks";
 import {
   getPlaylistsThunk,
@@ -49,7 +49,7 @@ export const Library: FC<Props> = () => {
     }
   }, [pathname]);
 
-  const handlePlayer = (id: string) => {
+  const handlePlayer = useCallback((id: string) => {
     dispatch(changeCurrentItem(id));
     const data = { token, id };
 
@@ -63,7 +63,7 @@ export const Library: FC<Props> = () => {
       dispatch(getAlbumItemThunk(data));
     }
     setPlaying(true);
-  };
+  },[flag])
 
   return (
       <Cards

@@ -1,4 +1,4 @@
-import { useEffect, FC, BaseSyntheticEvent, useState } from "react";
+import { useEffect, FC, BaseSyntheticEvent } from "react";
 import { Button, Input } from "antd";
 import { useNavigate, useParams, useLocation, useSearchParams } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "core/redux/hooks";
@@ -59,7 +59,7 @@ export const HeaderComponent:FC<Props> = (props) => {
       onChange={handleSearch}
       />} 
       </div>
-      {token ? (
+      {!_error && token? (
         <Profile user={user} />
       ) : (
         <Button

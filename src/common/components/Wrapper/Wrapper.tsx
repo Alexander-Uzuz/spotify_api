@@ -14,6 +14,7 @@ const { Sider, Content, Header } = Layout;
 
 export const Wrapper:FC<Props> = () => {
   const [collapsed, setCollapsed] = useState(false);
+
   return (
 <Layout>
       <Sider

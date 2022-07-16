@@ -1,8 +1,8 @@
-import { FC, useContext, useEffect } from "react";
+import { FC, useCallback, useContext, useEffect, memo } from "react";
 import { useInfinityScroll } from "common/hooks/useInfinityScroll";
 import { MusicPlayerContext } from "core/context/PlayerContext";
 import { Typography, List, Spin } from "antd";
-import { CardComponent } from "common/components/Cards/components/Card/Card";
+import  {CardComponent}  from "common/components/Cards/components/Card/Card";
 import { ReactComponent as SpinnerLogo } from "assets/icons/spinner.svg";
 import { useAppDispatch } from "core/redux/hooks";
 import { useParams } from "react-router-dom";
@@ -25,14 +25,16 @@ type Props = {
 
 const { Title } = Typography;
 
-export const Cards: FC<Props> = (props) => {
+const CardsInner: FC<Props> = (props) => {
   const { title, loading, playlist, currentItemId, handlePlayer, total,offset, getCards } = props;
   const { playing, setPlaying } = useContext(MusicPlayerContext);
   const {loadingData, setLoadingData} = useInfinityScroll();
   const token = localStorage.getItem("token") || "";
   const { id } = useParams();
-  const handlePlay = (id: string) => handlePlayer(id);
+  const handlePlay = useCallback((id: string) => handlePlayer(id),[id])
   const dispatch = useAppDispatch();
+
+  console.log('cards render')
 
   useEffect(() => {
     if (loadingData && total > offset && getCards) {
@@ -44,6 +46,7 @@ export const Cards: FC<Props> = (props) => {
       },1500)
     }
   }, [loadingData]);
+
 
 
   return (
@@ -66,7 +69,9 @@ export const Cards: FC<Props> = (props) => {
               }}
               dataSource={playlist}
               renderItem={(item) => (
-                <List.Item>
+                <List.Item
+                key={item.id}
+                >
                   <CardComponent
                     card={item}
                     playing={playing}
@@ -88,4 +93,6 @@ export const Cards: FC<Props> = (props) => {
     </>
   );
 };
+
+export const Cards = memo(CardsInner);
 

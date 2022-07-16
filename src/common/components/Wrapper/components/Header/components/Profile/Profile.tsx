@@ -1,5 +1,7 @@
 import {FC, useState} from 'react';
 import { Menu, Avatar, Typography, Dropdown, MenuProps } from "antd";
+import { useAppDispatch } from 'core/redux/hooks';
+import { removeUser } from 'modules/SignIn/SignInSlice';
 import AvatarImg from "assets/images/avatar.png";
 import ProfileArrow from "assets/icons/profile__arrow.svg";
 import './Profile.scss'
@@ -14,27 +16,31 @@ type Props = {
 
 const { Title } = Typography;
 
-const handleLogout = () => {
-  localStorage.removeItem('token');
-  window.location.reload();
-}
 
-const items: MenuProps["items"] = [
-  // {
-  //   label: <p className="dropdown__menu-item">Profile</p>,
-  //   key: "setting",
-  // },
-  {
-    label: <p className="dropdown__menu-item" onClick={handleLogout}>Logout</p>,
-    key: "exit",
-  },
-];
-const menu = <Menu items={items} />;
+
 
 export const Profile:FC<Props> = ({user}) => {
     const [rotate, setRotate] = useState(false);
+    const dispatch = useAppDispatch();
 
     const handleRotate = () => setRotate(!rotate);
+
+    const handleLogout = () => {
+      localStorage.removeItem('token');
+      dispatch(removeUser())
+      window.location.reload();
+    }
+    
+
+    const items: MenuProps["items"] = [
+      {
+        label: <p className="dropdown__menu-item" onClick={handleLogout}>Logout</p>,
+        key: "exit",
+      },
+    ];
+
+    const menu = <Menu items={items} />;
+
   return (
     <div className="profile__container">
     <Avatar
