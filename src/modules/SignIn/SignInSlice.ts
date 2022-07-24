@@ -38,6 +38,7 @@ const userSlice = createSlice({
             state.user.username = action.payload.display_name;
             state.user.id = action.payload.id;
             state.user.avatarUrl = action.payload.images[0].url;
+            localStorage.setItem('user',JSON.stringify(state.user))
         })
         builder.addCase(signInThunk .rejected, (state, action:PayloadAction<any>) => {
             state._error = action.payload;

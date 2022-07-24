@@ -1,6 +1,5 @@
-import { FC, memo, useCallback } from "react";
+import { FC, memo } from "react";
 import { Card } from "antd";
-import { useAppDispatch } from "core/redux/hooks";
 import "./Card.scss";
 
 type Props = {
@@ -27,9 +26,6 @@ const CardComponentInner: FC<Props> = ({
 }) => {
   const handleStop = () => setPlaying(false);
   const handleStart = () => handlePlay(card.id);
-
-  // console.log(card,'card')
-  
 
   return (
     <div className="card__wrapper">

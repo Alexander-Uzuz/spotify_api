@@ -1,4 +1,4 @@
-import { IGetPlaylistItems, IPlaylistItem } from "./IGetPlayilstItems";
+import { IGetPlayerItems, IPlayerItem } from "./IGetPlayerItems";
 import { IGetFollowingArtistItem } from "./IGetFollowArtistItem";
 
 
@@ -12,7 +12,7 @@ interface ITrack{
 }
 
 export interface IInitialState{
-    playlist:ITrack[],
+    player:ITrack[],
     currentTrack:ITrack | null,
     error:null | string,
     search:boolean;

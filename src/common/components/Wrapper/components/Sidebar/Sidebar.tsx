@@ -1,6 +1,6 @@
 import { FC, useState, useEffect, BaseSyntheticEvent } from "react";
 import { Menu } from "antd";
-import { Link, useLocation } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 import { ReactComponent as HomeIcon } from "assets/icons/homeNav.svg";
 import { ReactComponent as SearcIcon } from "assets/icons/searchNav.svg";
 import { ReactComponent as LibIcon } from "assets/icons/libNav.svg";
@@ -27,14 +27,14 @@ export const Sidebar: FC<Props> = (props) => {
 
   return (
     <div>
-      <Link to="/home">
+      <NavLink to="/home">
         <img
           src={Logo}
           alt="Logo"
           style={{ width: "164px", height: "49px" }}
           className="sidebar__logo"
         />
-      </Link>
+      </NavLink>
       <Menu
         defaultSelectedKeys={["1"]}
         mode="inline"
@@ -47,9 +47,9 @@ export const Sidebar: FC<Props> = (props) => {
             key: "/home",
             icon: <HomeIcon />,
             label: (
-              <Link to="/home" className="menu__link">
+              <NavLink to="/home" className="menu__link">
                 Home
-              </Link>
+              </NavLink>
             ),
             className: "menu__item",
           },
@@ -57,9 +57,9 @@ export const Sidebar: FC<Props> = (props) => {
             key: "/search",
             icon: <SearcIcon />,
             label: (
-              <Link to="/search" className="menu__link">
+              <NavLink to="/search" className="menu__link">
                 Search
-              </Link>
+              </NavLink>
             ),
             className: "menu__item",
           },
@@ -67,9 +67,9 @@ export const Sidebar: FC<Props> = (props) => {
             key: "/lib",
             icon: <LibIcon />,
             label: (
-              <Link to="/library/playlists" className="menu__link">
+              <NavLink to="/library/playlists" className="menu__link">
                 Library
-              </Link>
+              </NavLink>
             ),
             className: "menu__item",
           },

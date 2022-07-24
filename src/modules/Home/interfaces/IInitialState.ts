@@ -7,7 +7,7 @@ export interface IInitialState{
     total:number;
 }
 
-interface IPlaylist{
+export interface IPlaylist{
     img:string;
     id:string;
     name:string;

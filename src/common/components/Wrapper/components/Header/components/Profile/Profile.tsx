@@ -7,11 +7,7 @@ import ProfileArrow from "assets/icons/profile__arrow.svg";
 import './Profile.scss'
 
 type Props = {
-    user:{
-        username:string | null;
-        id:string | null;
-        avatarUrl:string | null;
-    }
+
 }
 
 const { Title } = Typography;
@@ -19,9 +15,10 @@ const { Title } = Typography;
 
 
 
-export const Profile:FC<Props> = ({user}) => {
+export const Profile:FC<Props> = () => {
     const [rotate, setRotate] = useState(false);
     const dispatch = useAppDispatch();
+    const user = JSON.parse(localStorage.getItem('user') || '{}');
 
     const handleRotate = () => setRotate(!rotate);
 
@@ -44,13 +41,13 @@ export const Profile:FC<Props> = ({user}) => {
   return (
     <div className="profile__container">
     <Avatar
-      src={user.avatarUrl ? user.avatarUrl : AvatarImg}
+      src={user?.avatarUrl ? user.avatarUrl : AvatarImg}
       size={37}
       shape={"circle"}
       className="profile__avatar"
     />
     <Title className="profile_title" level={5}>
-      {user.username}
+      {user?.username ? user.username : 'Гость'}
     </Title>
     <Dropdown overlay={menu} trigger={["click"]}>
       <img

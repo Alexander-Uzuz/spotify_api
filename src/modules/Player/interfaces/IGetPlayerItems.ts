@@ -1,6 +1,6 @@
-export interface IGetPlaylistItems{
+export interface IGetPlayerItems{
     "href" : string,
-    "items" : IPlaylistItem[],
+    "items" : IPlayerItem[],
     "limit" : number,
     "next" : null | string,
     "offset" : number,
@@ -9,7 +9,7 @@ export interface IGetPlaylistItems{
     flag:string;
   }
 
-  export interface IPlaylistItem{
+  export interface IPlayerItem{
     "added_at" : string,
     "added_by" : {
       "external_urls" : {

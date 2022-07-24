@@ -2,7 +2,7 @@ import { getPlaylistItem,getFollowArtistItem, getAlbumsItem  } from 'api/lib/lib
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
 export const getPlaylistsItemThunk = createAsyncThunk(
-    'playlist/getPlaylistsItem',
+    'player/getPlaylistsItem',
     async function(data:{token:string | null,id:string, type?:string}, {rejectWithValue}){
         if(typeof data.token === 'string'){
             try{
@@ -18,7 +18,7 @@ export const getPlaylistsItemThunk = createAsyncThunk(
 )
 
 export const getArtistItemThunk = createAsyncThunk(
-    'playlist/getArtistItem',
+    'player/getArtistItem',
     async function(data:{token:string | null,id:string}, {rejectWithValue}){
         if(typeof data.token === 'string'){
             try{
@@ -34,7 +34,7 @@ export const getArtistItemThunk = createAsyncThunk(
 )
 
 export const getAlbumItemThunk = createAsyncThunk(
-    'playlist/getAlbumItem',
+    'player/getAlbumItem',
     async function(data:{token:string | null,id:string}, {rejectWithValue}){
         if(typeof data.token === 'string'){
             try{

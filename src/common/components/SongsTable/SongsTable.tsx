@@ -4,14 +4,16 @@ import Play from "assets/icons/playTable.svg";
 import { Table } from "antd";
 import type { ColumnsType } from "antd/lib/table";
 import { useAppSelector, useAppDispatch } from "core/redux/hooks";
-import { playSongTable } from "modules/Playlist/playlistSlice";
+import { playSongTable } from "modules/Player/playerSlice";
 import { ISearchDataItem } from "modules/Search/interfaces/IInitialState";
 import "./SongsTable.scss";
 
-type Props = {};
+type Props = {
+  
+};
 
 export const SongsTable: FC<Props> = () => {
-  const { playlist, currentTrack } = useAppSelector((state) => state.playlist);
+  const { player, currentTrack } = useAppSelector((state) => state.player);
   const { playing, setPlaying } = useContext(MusicPlayerContext);
   const dispatch = useAppDispatch();
 
@@ -116,7 +118,7 @@ export const SongsTable: FC<Props> = () => {
     <Table
       className="songsTable"
       columns={columns}
-      dataSource={playlist}
+      dataSource={player}
       pagination={false}
       rowKey="id"
     />

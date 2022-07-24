@@ -1,11 +1,11 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { IInitialState } from "./interfaces/IPlaylist";
-import {getPlaylistsItemThunk, getArtistItemThunk, getAlbumItemThunk} from './playlistThunk';
+import { IInitialState } from "./interfaces/IPlayer";
+import {getPlaylistsItemThunk, getArtistItemThunk, getAlbumItemThunk} from './playerThunk';
 import { getSearchThunk } from "modules/Search/SearchThunk";
 import { IGetSearch } from "modules/Search/interfaces/IGetSearch";
 
 const initialState:IInitialState ={
-    playlist:[],
+    player:[],
     currentTrack:null,
     error:null,
     loading:false,
@@ -13,41 +13,41 @@ const initialState:IInitialState ={
     flag:''
 }
 
-const playlistSlice = createSlice({
-    name:'playlist',
+const playerSlice = createSlice({
+    name:'player',
     initialState,
     reducers:{
         prevTrack(state){
-            const currentIndex = state.playlist.findIndex((item:any) => item.id === state.currentTrack?.id);
+            const currentIndex = state.player.findIndex((item:any) => item.id === state.currentTrack?.id);
 
             if(currentIndex === 0){
-                state.currentTrack = state.playlist[state.playlist.length - 1];
+                state.currentTrack = state.player[state.player.length - 1];
             }else{
-                state.currentTrack = state.playlist[currentIndex - 1]
+                state.currentTrack = state.player[currentIndex - 1]
             }
         },
         nextTrack(state){
-            const currentIndex = state.playlist.findIndex((item:any) => item.id === state.currentTrack?.id);
+            const currentIndex = state.player.findIndex((item:any) => item.id === state.currentTrack?.id);
 
-            if(currentIndex === state.playlist.length - 1){
-                state.currentTrack = state.playlist[0];
+            if(currentIndex === state.player.length - 1){
+                state.currentTrack = state.player[0];
             }else{
-                state.currentTrack = state.playlist[currentIndex + 1]
+                state.currentTrack = state.player[currentIndex + 1]
             }
         },
         addImgTrack(state, action:PayloadAction<string>){
             if(state.currentTrack){
                 state.currentTrack.img =  action.payload;
             }
-            state.playlist.map(item => item.img = action.payload);
+            state.player.map(item => item.img = action.payload);
         },
         playSongTable(state,action:PayloadAction<string>){
-            const song = state.playlist.find(item => item.id === action.payload);
+            const song = state.player.find(item => item.id === action.payload);
 
             if(song){
                 state.currentTrack = song;
             }else{
-                state.currentTrack = state.playlist[0];
+                state.currentTrack = state.player[0];
             }
         }
     },
@@ -73,7 +73,7 @@ const playlistSlice = createSlice({
             state.search = false;
             const arr = action.payload.items.filter((item:any) => item.track?.preview_url);
 
-            state.playlist = arr.map((item:any) => {
+            state.player = arr.map((item:any) => {
                 return {
                     id:item.track.id ? item.track.id : '',
                     preview_url:item.track.preview_url,
@@ -82,11 +82,11 @@ const playlistSlice = createSlice({
                     img:item.track.album.images[0].url
                 }
             })  
-            state.currentTrack = state.playlist[0];            
+            state.currentTrack = state.player[0];            
         })
         builder.addCase(getArtistItemThunk .fulfilled, (state, action:PayloadAction<any>) => {
             state.search = false;
-            state.playlist = action.payload.tracks.map((item:any) => {
+            state.player = action.payload.tracks.map((item:any) => {
                 return {
                     id:item.id,
                     preview_url:item.preview_url,
@@ -95,11 +95,11 @@ const playlistSlice = createSlice({
                     img:item.album.images[0].url
                 }
             })     
-            state.currentTrack = state.playlist[0];      
+            state.currentTrack = state.player[0];      
         })
         builder.addCase(getAlbumItemThunk .fulfilled, (state, action:PayloadAction<any>) => {
             state.search = false;
-            state.playlist = action.payload.items.map((item:any) => {
+            state.player = action.payload.items.map((item:any) => {
                 return {
                     id:item.id,
                     songName:item.name,
@@ -108,11 +108,11 @@ const playlistSlice = createSlice({
                     img:null
                 }
             })        
-            state.currentTrack = state.playlist[0];    
+            state.currentTrack = state.player[0];    
         })
         builder.addCase(getSearchThunk .fulfilled, ((state,action:PayloadAction<IGetSearch>) => {
             state.search = true;
-            state.playlist = action.payload.tracks.items.map(item => {
+            state.player = action.payload.tracks.items.map(item => {
                 return {
                     id:item.id,
                     preview_url:item.preview_url,
@@ -141,5 +141,5 @@ const playlistSlice = createSlice({
     }
 })
 
-export const {prevTrack, nextTrack, addImgTrack,playSongTable } = playlistSlice.actions;
-export default playlistSlice.reducer;
+export const {prevTrack, nextTrack, addImgTrack,playSongTable } = playerSlice.actions;
+export default playerSlice.reducer;

@@ -1,36 +1,30 @@
-import {FC, useContext} from 'react';
-import { useAppSelector, useAppDispatch } from 'core/redux/hooks';
-import { MusicPlayerContext } from "core/context/PlayerContext";
-import { changeCurrentItem } from "modules/Genre/GenreSlice";
-import { Cards } from 'common/components/Cards/Cards';
-import {getPlaylistsItemThunk} from 'modules/Playlist/playlistThunk';
-import {getCategorysPlaylistsThunk} from './GenreThunk';
+import { FC } from "react";
+import Cards from "common/components/Cards/CardsContainer";
+import { getCategorysPlaylistsThunk } from "./GenreThunk";
+import { IPlaylist } from "modules/Home/interfaces/IInitialState";
 
+type Props = {
+  playlistGenre: IPlaylist[];
+  loading: boolean;
+  currentItemId: string;
+  handlePlay: (id: string) => void;
+  total: number;
+  offset: number;
+};
 
-type Props = {}
-
-export const Genre:FC<Props> = () => {
-  const {playlistGenre, currentItemId, loading} = useAppSelector(state => state.genre)
-  const {setPlaying} = useContext(MusicPlayerContext);
-  const dispatch = useAppDispatch();
-  const token = localStorage.getItem("token") || "";
-  const {total, offset} = useAppSelector(state => state.genre)
-
-
-  const handlePlay = (id:string) => {
-    dispatch(changeCurrentItem(id));
-    dispatch(getPlaylistsItemThunk({token,id}))
-    setPlaying(true)
-  }
-
+export const Genre: FC<Props> = (props) => {
+  const { playlistGenre, loading, currentItemId, handlePlay, total, offset } =
+    props;
   return (
-      <Cards 
-      getCards={getCategorysPlaylistsThunk} 
-      loading={loading} 
-      playlist={playlistGenre} 
-      currentItemId={currentItemId} 
-      handlePlayer={handlePlay} 
-      total={total} 
-      offset={offset}/>
-  )
-}
+    <Cards
+      getCards={getCategorysPlaylistsThunk}
+      loading={loading}
+      playlist={playlistGenre}
+      currentItemId={currentItemId}
+      handlePlayer={handlePlay}
+      total={total}
+      offset={offset}
+    />
+  );
+};
+

@@ -3,7 +3,7 @@ export const BASE_URL = 'https://api.spotify.com/v1/'
 const authEndpoint = "https://accounts.spotify.com/authorize?";
 const clientId = '9309a5a8d84f49fb91991600cca1d8ed';
 const redirectUri = "http://localhost:3000/home";
-const scopes = ["user-library-read", "playlist-read-private",'user-follow-read'];
+const scopes = ["user-library-read", "playlist-read-private",'user-follow-read','ugc-image-upload','playlist-modify-private','playlist-modify-public'];
 
 export const loginEndpoint = `${authEndpoint}client_id=${clientId}&redirect_uri=${redirectUri}&scope=${scopes.join(
   "%20"

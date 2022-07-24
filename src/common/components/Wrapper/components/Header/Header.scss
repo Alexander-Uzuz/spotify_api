@@ -5,6 +5,9 @@
   align-items: center;
   background: #121212;
   padding: 0;
+  position: sticky;
+  top:0;
+  z-index: 999;
 }
 
 .ant-btn.ant-btn-link.header__button-signIn {

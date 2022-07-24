@@ -1,71 +1,21 @@
-import { FC, useEffect, useContext, useCallback } from "react";
-import { useAppSelector, useAppDispatch } from "core/redux/hooks";
-import {
-  getPlaylistsThunk,
-  getFollowingArtistsThunk,
-  getSaveAlbumsThunk,
-} from "./LibraryThunk";
-import { MusicPlayerContext } from "core/context/PlayerContext";
-import { useLocation } from "react-router-dom";
-import {
-  getPlaylistsItemThunk,
-  getArtistItemThunk,
-  getAlbumItemThunk,
-} from "modules/Playlist/playlistThunk";
-import { changeCurrentItem } from "modules/Library/LibrarySlice";
-import { Cards } from "common/components/Cards/Cards";
+import { FC } from "react";
+import  Cards  from "common/components/Cards/CardsContainer";
 import "./Library.scss";
+import { IPlaylist } from "modules/Home/interfaces/IInitialState";
 
-type Props = {};
+type Props = {
+    pathname:string;
+    playlist: IPlaylist[];
+    loading: boolean;
+    currentItemId: string;
+    handlePlayer: (id:string) => void;
+    total: number;
+    offset: number;  
+};
 
 
-export const Library: FC<Props> = () => {
-  const { setPlaying } = useContext(MusicPlayerContext);
-  const dispatch = useAppDispatch();
-  const token = localStorage.getItem("token");
-  const { pathname } = useLocation();
-  const { playlist, error, loading, flag, currentItemId, offset, total } = useAppSelector(
-    (state) => state.lib
-  );
-
-  useEffect(() => {
-    if (error) {
-      localStorage.removeItem("token");
-    }
-  }, [error]);
-
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (pathname === "/library/playlists") {
-      dispatch(getPlaylistsThunk(token));
-    }
-
-    if (pathname === "/library/artists") {
-      dispatch(getFollowingArtistsThunk(token));
-    }
-
-    if (pathname === "/library/albums") {
-      dispatch(getSaveAlbumsThunk(token));
-    }
-  }, [pathname]);
-
-  const handlePlayer = (id: string) => {
-    console.log(flag,'flag')
-
-    dispatch(changeCurrentItem(id));
-    const data = { token, id };
-
-    if (flag === "playlists") {
-      dispatch(getPlaylistsItemThunk(data));
-    }
-    if (flag === "artists") {
-      dispatch(getArtistItemThunk(data));
-    }
-    if (flag === "album") {
-      dispatch(getAlbumItemThunk(data));
-    }
-    setPlaying(true);
-  }
+export const Library: FC<Props> = (props) => {
+    const {pathname,playlist,loading,currentItemId,handlePlayer,total,offset} = props;
 
   return (
       <Cards
@@ -85,3 +35,5 @@ export const Library: FC<Props> = () => {
       />
   );
 };
+
+

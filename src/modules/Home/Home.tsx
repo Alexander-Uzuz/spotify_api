@@ -1,58 +1,24 @@
-import { FC, useEffect, useContext, useCallback } from "react";
+import { FC, memo } from "react";
 import { Typography } from "antd";
-import { MusicPlayerContext } from "core/context/PlayerContext";
-import { useAppSelector } from "core/redux/hooks";
-import { useAppDispatch } from "core/redux/hooks";
-import { getFeaturedPlaylistsThunk } from "modules/Home/HomeThunk";
-import { getPlaylistsItemThunk } from "modules/Playlist/playlistThunk";
-import { changeCurrentItem } from "./HomeSlice";
-import { signInThunk } from "modules/SignIn/SignInThunk";
 import SpotifyBg from "assets/images/spotify_background.jpg";
+import {IPlaylist} from './interfaces/IInitialState';
 import "./Home.scss";
-import { Cards } from "common/components/Cards/Cards";
+import  Cards  from "common/components/Cards/CardsContainer";
 
 const { Title } = Typography;
 
-type Props = {};
+type Props = {
+  featuredPlaylist: IPlaylist[];
+  loading: boolean;
+  currentItemId: string;
+  handlePlayer: (id:string) => void;
+  total: number;
+  offset: number;
+  getCards: (data:{token:string, id:string, offset:number}) => any;
+};
 
-export const Home: FC<Props> = (props) => {
-  const { currentItemId, featuredPlaylist, loading, offset, total } =
-    useAppSelector((state) => state.home);
-  const { setPlaying } = useContext(MusicPlayerContext);
-  const { _error, user } = useAppSelector((state) => state.signIn);
-  const token = localStorage.getItem("token") || "";
-  const dispatch = useAppDispatch();
-
-  useEffect(() => {
-    const hash = window.location.hash;
-    const _token = hash.split("&")[0].split("=")[1];
-    if (!_error) {
-      (async function () {
-        window.location.hash = "";
-        if (!token && hash) {
-          window.localStorage.setItem("token", _token);
-          await dispatch(signInThunk(_token));
-        }
-        if (token) {
-          await dispatch(signInThunk(token));
-        }
-      })();
-    } else {
-      localStorage.removeItem("token");
-    }
-  }, [_error]);
-
-  useEffect(() => {
-    if (user.id) {
-      dispatch(getFeaturedPlaylistsThunk({ token, offset }));
-    }
-  }, [user.id]);
-
-  const handlePlay = (id: string) => {
-    dispatch(changeCurrentItem(id));
-    dispatch(getPlaylistsItemThunk({ token, id }));
-    setPlaying(true);
-  };
+const HomeWrapper: FC<Props> = (props) => {
+  const {featuredPlaylist,loading,currentItemId,handlePlayer,total,offset,getCards} = props;
 
   return (
     <>
@@ -62,10 +28,10 @@ export const Home: FC<Props> = (props) => {
           loading={loading}
           title="Playlists spotify"
           currentItemId={currentItemId}
-          handlePlayer={handlePlay}
+          handlePlayer={handlePlayer}
           total={total}
           offset={offset}
-          getCards={getFeaturedPlaylistsThunk}
+          getCards={getCards}
         />
       ) : (
         <div className="home__unauth" style={{ textAlign: "center" }}>
@@ -85,3 +51,5 @@ export const Home: FC<Props> = (props) => {
     </>
   );
 };
+
+export const Home = memo(HomeWrapper);

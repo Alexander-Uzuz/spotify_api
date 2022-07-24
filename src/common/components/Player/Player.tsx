@@ -4,7 +4,7 @@ import { Slider } from "antd";
 import { Song } from "./components/Song/Song";
 import { useAppSelector } from "core/redux/hooks";
 import { useAppDispatch } from "core/redux/hooks";
-import { addImgTrack } from "modules/Playlist/playlistSlice";
+import { addImgTrack } from "modules/Player/playerSlice";
 import { Turntable } from "./components/Turntable/Turntable";
 import "./Player.scss";
 
@@ -14,7 +14,7 @@ type Props = {
 
 
 export const Player:FC<Props> = () => {
-  const {flag, currentTrack} = useAppSelector(state => state.playlist);
+  const {flag, currentTrack} = useAppSelector(state => state.player);
   const {playlist, currentItemId} = useAppSelector(state => state.lib);
   const audioPlayer = useRef<any>(null);
   const dispatch = useAppDispatch();

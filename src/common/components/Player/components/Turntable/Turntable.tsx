@@ -5,7 +5,7 @@ import StopPlayerIcon from 'assets/icons/stopPlayer.svg';
 import PlayPlayerIcon from 'assets/icons/playPlayer.svg';
 import { MusicPlayerContext } from "core/context/PlayerContext";
 import { useAppDispatch } from 'core/redux/hooks';
-import { prevTrack, nextTrack } from 'modules/Playlist/playlistSlice';
+import { prevTrack, nextTrack } from 'modules/Player/playerSlice';
 import {Bar} from './components/Bar';
 
 type Props = {
