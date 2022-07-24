@@ -18,11 +18,12 @@ type Props = {
     description?: string | undefined;
   }[];
   currentItemId: string;
-  handlePlayer: (id: string) => void;
+  handlePlayer: (id: string, flag?:boolean) => void;
+  type?:'playlist' | 'artist' | 'album'
 };
 
 const CardsInnerContaner: FC<Props> = (props) => {
-  const { title, loading, playlist, currentItemId, handlePlayer, total,offset, getCards } = props;
+  const { title, loading, playlist, currentItemId, handlePlayer, total,offset, getCards,type} = props;
   const { playing, setPlaying } = useContext(MusicPlayerContext);
   const {loadingData, setLoadingData} = useInfinityScroll();
   const token = localStorage.getItem("token") || "";
@@ -51,6 +52,7 @@ const CardsInnerContaner: FC<Props> = (props) => {
         setPlaying={setPlaying}
         handlePlay={handlePlay}
         currentItemId={currentItemId}
+        type={type}
       />
     </>
   );

@@ -13,16 +13,17 @@ type Props = {
         name: string;
         description?: string | undefined;
       }[];
-    handlePlay:(id:string) => void;
+    handlePlay:(id:string, flag?:boolean) => void;
     playing:boolean;
     setPlaying:React.Dispatch<React.SetStateAction<boolean>>
     currentItemId:string;
+    type?:'playlist' | 'artist' | 'album'
 };
 
 const { Title } = Typography;
 
 const CardsInner:FC<Props> = (props) => {
-    const {loading,title,playlist,handlePlay,currentItemId, playing, setPlaying} = props;
+    const {loading,title,playlist,handlePlay,currentItemId, playing, setPlaying,type} = props;
 
   return (
     <div className="block">
@@ -50,6 +51,7 @@ const CardsInner:FC<Props> = (props) => {
                   setPlaying={setPlaying}
                   handlePlay={handlePlay}
                   currentItemId={currentItemId}
+                  type={type}
                 />
               </List.Item>
             )}

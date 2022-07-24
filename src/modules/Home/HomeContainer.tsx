@@ -6,16 +6,16 @@ import { getFeaturedPlaylistsThunk } from "modules/Home/HomeThunk";
 import { getPlaylistsItemThunk } from "modules/Player/playerThunk";
 import { changeCurrentItem } from "./HomeSlice";
 import { signInThunk } from "modules/SignIn/SignInThunk";
-import {Home} from './Home';
+import { Home } from "./Home";
+import { useNavigate } from "react-router-dom";
 
+type Props = {};
 
-type Props = {}
-
-const HomeContainer:FC<Props> = (props) => {
-    const { currentItemId, featuredPlaylist, loading, offset, total } =
+const HomeContainer: FC<Props> = (props) => {
+  const { currentItemId, featuredPlaylist, loading, offset, total } =
     useAppSelector((state) => state.home);
   const { setPlaying } = useContext(MusicPlayerContext);
-  const {error} = useAppSelector(state => state.home);
+  const { error } = useAppSelector((state) => state.home);
   const { _error, user } = useAppSelector((state) => state.signIn);
   const token = localStorage.getItem("token") || "";
   const dispatch = useAppDispatch();
@@ -46,30 +46,31 @@ const HomeContainer:FC<Props> = (props) => {
   }, [user.id]);
 
   useEffect(() => {
-    if(error){
-      localStorage.removeItem('token')
+    if (error) {
+      localStorage.removeItem("token");
     }
-  },[error])
+  }, [error]);
 
-
-  const handlePlay = useCallback((id: string) => {
-    dispatch(changeCurrentItem(id));
-    dispatch(getPlaylistsItemThunk({ token, id }));
-    setPlaying(true);
-  },[token])
-
+  const handlePlay = useCallback(
+    (id: string) => {
+      dispatch(changeCurrentItem(id));
+      dispatch(getPlaylistsItemThunk({ token, id }));
+      setPlaying(true);
+    },
+    [token]
+  );
 
   return (
     <Home
-    featuredPlaylist={featuredPlaylist}
-    loading={loading}
-    currentItemId={currentItemId}
-    handlePlayer={handlePlay}
-    total={total}
-    offset={offset}
-    getCards={getFeaturedPlaylistsThunk}
+      featuredPlaylist={featuredPlaylist}
+      loading={loading}
+      currentItemId={currentItemId}
+      handlePlayer={handlePlay}
+      total={total}
+      offset={offset}
+      getCards={getFeaturedPlaylistsThunk}
     />
-  )
-}
+  );
+};
 
 export default HomeContainer;

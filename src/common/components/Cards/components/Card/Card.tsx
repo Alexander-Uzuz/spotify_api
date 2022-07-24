@@ -1,6 +1,7 @@
-import { FC, memo } from "react";
+import { BaseSyntheticEvent, FC, memo } from "react";
 import { Card } from "antd";
 import "./Card.scss";
+import { useNavigate } from "react-router-dom";
 
 type Props = {
   card: {
@@ -12,7 +13,8 @@ type Props = {
   currentItemId:string;
   playing: boolean;
   setPlaying: (playing: boolean) => void;
-  handlePlay:(id:string) => void;
+  handlePlay:(id:string, flag?:boolean) => void;
+  type?:'playlist' | 'artist' | 'album'
 };
 
 const { Meta } = Card;
@@ -23,17 +25,28 @@ const CardComponentInner: FC<Props> = ({
   currentItemId,
   setPlaying,
   handlePlay,
+  type = 'playlist'
 }) => {
+  const navigate = useNavigate();
   const handleStop = () => setPlaying(false);
-  const handleStart = () => handlePlay(card.id);
+  const handleClickCard = (e:BaseSyntheticEvent) => {
+    if(e.target.closest('.card__play')){
+      if(e.target.closest('.card__stop')){
+        handleStop()
+      }else{
+        handlePlay(card.id)
+      }
+    }else{
+      navigate(`/${type}/${card.id}`)
+    }
+  }
 
   return (
-    <div className="card__wrapper">
+    <div className="card__wrapper" onClick={handleClickCard} >
       {playing && card.id === currentItemId ? (
         <svg
-          onClick={handleStop}
-          style={{display:'block'}}
-          className="card__play"
+          style={{display:'block', zIndex:999}}
+          className="card__play card__stop"
           width="51"
           height="51"
           viewBox="0 0 64 64"
@@ -47,8 +60,7 @@ const CardComponentInner: FC<Props> = ({
         </svg>
       ) : (
         <svg
-        onClick={handleStart} 
-        className="card__play" 
+        className="card__play card__start" 
         width="51" height="51" 
         fill="#1ED7">
           <path

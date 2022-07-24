@@ -79,7 +79,7 @@ export const SongsTable: FC<Props> = () => {
           <div className="name__container" key={`${index}`}>
             <img
               className="songsTable__img"
-              src={item.albumName ? item.img : ""}
+              src={item.img ? item.img : ""}
               alt=""
             />
             <div>

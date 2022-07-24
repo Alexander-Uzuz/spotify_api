@@ -11,10 +11,11 @@ type Props = {
   featuredPlaylist: IPlaylist[];
   loading: boolean;
   currentItemId: string;
-  handlePlayer: (id:string) => void;
+  handlePlayer: (id:string, flag?:boolean) => void;
   total: number;
   offset: number;
   getCards: (data:{token:string, id:string, offset:number}) => any;
+  
 };
 
 const HomeWrapper: FC<Props> = (props) => {
@@ -32,6 +33,7 @@ const HomeWrapper: FC<Props> = (props) => {
           total={total}
           offset={offset}
           getCards={getCards}
+          type="playlist"
         />
       ) : (
         <div className="home__unauth" style={{ textAlign: "center" }}>

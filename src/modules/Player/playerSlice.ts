@@ -1,7 +1,9 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { IInitialState } from "./interfaces/IPlayer";
 import {getPlaylistsItemThunk, getArtistItemThunk, getAlbumItemThunk} from './playerThunk';
+import {IGetPlaylistInfo} from 'modules/Info/interfaces/IGetPlaylist'
 import { getSearchThunk } from "modules/Search/SearchThunk";
+import { getPlaylistThunk } from "modules/Info/InfoThunk";
 import { IGetSearch } from "modules/Search/interfaces/IGetSearch";
 
 const initialState:IInitialState ={
@@ -68,6 +70,10 @@ const playerSlice = createSlice({
             state.error = null;
             state.loading = false;
         })
+        builder.addCase(getPlaylistThunk .pending, (state) => {
+            state.error = null;
+            state.loading = false;
+        })
 
         builder.addCase(getPlaylistsItemThunk .fulfilled, (state, action:PayloadAction<any>) => {
             state.search = false;
@@ -123,6 +129,17 @@ const playerSlice = createSlice({
                 }
             })            
         }))
+        builder.addCase(getPlaylistThunk .fulfilled, ((state,action:PayloadAction<IGetPlaylistInfo>) => {
+            state.player = action.payload.tracks.items.map(item =>{
+                return {
+                    id:item.track.id,
+                    preview_url:item.track.preview_url,
+                    songName:item.track.name,
+                    artist:item.track.artists[0].name,
+                    img:item.track.album.images[0].url
+                }
+            })
+        }))
 
 
         builder.addCase(getPlaylistsItemThunk .rejected, (state, action:PayloadAction<any>) => {
@@ -135,6 +152,10 @@ const playerSlice = createSlice({
         })
         builder.addCase(getSearchThunk .rejected, (state, action:PayloadAction<any>) => {
             state.search = false;
+            state.error = action.payload;
+            state.loading = false;
+        })
+        builder.addCase(getPlaylistThunk .rejected, (state, action:PayloadAction<any>) => {
             state.error = action.payload;
             state.loading = false;
         })

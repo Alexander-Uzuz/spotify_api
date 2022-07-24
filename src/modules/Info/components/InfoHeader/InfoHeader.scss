@@ -1,0 +1,24 @@
+.infoheader__container{
+    display: flex;
+    align-items: flex-end;
+
+    .infoheader__img{
+        margin-right: 30px;
+        width: 250px;
+        height: 250px;
+    }
+
+    .infoheader__title{
+        font-size: 65px;
+    }
+
+    .infoheader__text{
+        margin-top: 15px;
+        display: block;
+        color:var(--color-white);
+    }
+
+    .infoheader__description{
+        color:var(--color-text);
+    }
+}
