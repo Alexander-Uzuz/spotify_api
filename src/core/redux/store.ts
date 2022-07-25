@@ -3,8 +3,8 @@ import { rootReducer } from './rootReducer';
 
 
 const preloadedState:any = {
-    playlist:{
-        playlist:localStorage.getItem('currentTrack') ? [JSON.parse(localStorage.getItem('currentTrack') || '')] : [] ,
+    player:{
+        player:localStorage.getItem('currentTrack') ? [JSON.parse(localStorage.getItem('currentTrack') || '')] : [] ,
         currentTrack:localStorage.getItem('currentTrack') ? JSON.parse(localStorage.getItem('currentTrack') || '') : null ,
         flag:localStorage.getItem('flag') ? localStorage.getItem('flag') : "artists"
     },

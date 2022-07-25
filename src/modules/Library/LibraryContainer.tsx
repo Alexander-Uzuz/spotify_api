@@ -67,7 +67,7 @@ const LibraryContainer: FC<Props> = () => {
 
   return (
       <Library
-        pathname={
+        title={
           pathname === "/library/playlists"
             ? "Playlists"
             : pathname === "/library/artists"
@@ -80,6 +80,13 @@ const LibraryContainer: FC<Props> = () => {
         handlePlayer={handlePlayer}
         total={total} 
         offset={offset}
+        type={
+          pathname === "/library/playlists"
+          ? "playlist"
+          : pathname === "/library/artists"
+          ? "artist"
+          : "album"
+        }
       />
   );
 };

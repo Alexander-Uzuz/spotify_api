@@ -6,6 +6,7 @@ import { Wrapper } from "./common/components/Wrapper/Wrapper";
 import { RequireAuth } from "./common/hooks/authProvider";
 import {InfoPlaylist} from './modules/Info/pages/InfoPlaylist/InfoPlaylist';
 import { Search } from "./modules/Search/Search";
+import { InfoArtist } from "modules/Info/pages/InfoArtist/InfoArtist";
 
 import  Genre  from "modules/Genre/GenreContainer";
 import "./App.scss";
@@ -24,6 +25,7 @@ export const App:FC = () => {
             <Route path="/search" element={<Search />} />
             <Route path="/genre/:id" element={<Genre />} />
             <Route path="playlist/:id" element={<InfoPlaylist/>}/>
+            <Route path="/artist/:id" element={<InfoArtist/>}/>
           </Route>
         </Route>
       </Routes>

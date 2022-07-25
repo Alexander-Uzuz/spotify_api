@@ -17,7 +17,6 @@ export const InfoHeader = (props: Props) => {
         <div className="infoheader__content">
             <Title className='infoheader__title infoheader__text' level={1}>{title}</Title>
             <Text className='infoheader__text infoheader__description'>{subtitle}</Text>
-            {/* <Text className='infoheader__text'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptates, repellendus.</Text> */}
         </div>
     </div>
   )

@@ -3,6 +3,17 @@ export interface IInitialState  {
     subtitle:string,
     type:string,
     img:string,
+    offset:number;
+    total:number;
+    currentItemId:string;
+    albums:IAlbum[],
     error:null | string,
     loading:boolean,
 };
+
+export interface IAlbum{
+    id: string;
+    img: string;
+    name: string;
+    description?: string | undefined;
+  }
