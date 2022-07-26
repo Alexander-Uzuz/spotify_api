@@ -12,10 +12,14 @@ interface ITrack{
 }
 
 export interface IInitialState{
-    player:ITrack[],
+    player:{
+        basic:ITrack[],
+        extra:ITrack[]
+    },
     currentTrack:ITrack | null,
     error:null | string,
     search:boolean;
     loading:boolean;
     flag:string;
+    switchPlayer:"basic" | "extra"
 }

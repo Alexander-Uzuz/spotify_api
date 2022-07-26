@@ -8,16 +8,24 @@ import {
 import { IGetPlaylistInfo } from "modules/Info/interfaces/IGetPlaylist";
 import { IGetTopTracksArtist } from "modules/Info/interfaces/IGetTopTracksArtist";
 import { getSearchThunk } from "modules/Search/SearchThunk";
-import { getPlaylistThunk,getTopTracksArtistThunk } from "modules/Info/InfoThunk";
+import {
+  getPlaylistThunk,
+  getTopTracksArtistThunk,
+  getArtistAlbumItemThunk
+} from "modules/Info/InfoThunk";
 import { IGetSearch } from "modules/Search/interfaces/IGetSearch";
 
 const initialState: IInitialState = {
-  player: [],
+  player: {
+    basic: [],
+    extra: [],
+  },
   currentTrack: null,
   error: null,
   loading: false,
   search: false,
   flag: "",
+  switchPlayer:"basic",
 };
 
 const playerSlice = createSlice({
@@ -25,40 +33,44 @@ const playerSlice = createSlice({
   initialState,
   reducers: {
     prevTrack(state) {
-      const currentIndex = state.player.findIndex(
+      const currentIndex = state.player[state.switchPlayer].findIndex(
         (item: any) => item.id === state.currentTrack?.id
       );
 
       if (currentIndex === 0) {
-        state.currentTrack = state.player[state.player.length - 1];
+        state.currentTrack = state.player[state.switchPlayer][state.player.basic.length - 1];
       } else {
-        state.currentTrack = state.player[currentIndex - 1];
+        state.currentTrack = state.player[state.switchPlayer][currentIndex - 1];
       }
     },
     nextTrack(state) {
-      const currentIndex = state.player.findIndex(
+      const currentIndex = state.player[state.switchPlayer].findIndex(
         (item: any) => item.id === state.currentTrack?.id
       );
 
-      if (currentIndex === state.player.length - 1) {
-        state.currentTrack = state.player[0];
+      if (currentIndex === state.player[state.switchPlayer].length - 1) {
+        state.currentTrack = state.player[state.switchPlayer][0];
       } else {
-        state.currentTrack = state.player[currentIndex + 1];
+        state.currentTrack = state.player[state.switchPlayer][currentIndex + 1];
       }
     },
     addImgTrack(state, action: PayloadAction<string>) {
       if (state.currentTrack) {
         state.currentTrack.img = action.payload;
       }
-      state.player.map((item) => (item.img = action.payload));
+      state.player[state.switchPlayer].map((item) => (item.img = action.payload));
     },
     playSongTable(state, action: PayloadAction<string>) {
-      const song = state.player.find((item) => item.id === action.payload);
+      const song = state.player.basic.find(
+        (item) => item.id === action.payload
+      );
 
       if (song) {
+        state.switchPlayer = 'basic';
         state.currentTrack = song;
       } else {
-        state.currentTrack = state.player[0];
+        state.switchPlayer = 'extra';
+        state.currentTrack = state.player.extra[0];
       }
     },
   },
@@ -72,6 +84,10 @@ const playerSlice = createSlice({
       state.loading = false;
     });
     builder.addCase(getAlbumItemThunk.pending, (state) => {
+      state.error = null;
+      state.loading = false;
+    });
+    builder.addCase(getArtistAlbumItemThunk.pending, (state) => {
       state.error = null;
       state.loading = false;
     });
@@ -91,12 +107,13 @@ const playerSlice = createSlice({
     builder.addCase(
       getPlaylistsItemThunk.fulfilled,
       (state, action: PayloadAction<any>) => {
+        state.switchPlayer = 'basic';
         state.search = false;
         const arr = action.payload.items.filter(
           (item: any) => item.track?.preview_url
         );
 
-        state.player = arr.map((item: any) => {
+        state.player.basic = arr.map((item: any) => {
           return {
             id: item.track.id ? item.track.id : "",
             preview_url: item.track.preview_url,
@@ -105,14 +122,15 @@ const playerSlice = createSlice({
             img: item.track.album.images[0].url,
           };
         });
-        state.currentTrack = state.player[0];
+        state.currentTrack = state.player.basic[0];
       }
     );
     builder.addCase(
       getArtistItemThunk.fulfilled,
       (state, action: PayloadAction<any>) => {
+        state.switchPlayer = 'basic';
         state.search = false;
-        state.player = action.payload.tracks.map((item: any) => {
+        state.player.basic = action.payload.tracks.map((item: any) => {
           return {
             id: item.id,
             preview_url: item.preview_url,
@@ -121,14 +139,15 @@ const playerSlice = createSlice({
             img: item.album.images[0].url,
           };
         });
-        state.currentTrack = state.player[0];
+        state.currentTrack = state.player.basic[0];
       }
     );
     builder.addCase(
       getAlbumItemThunk.fulfilled,
       (state, action: PayloadAction<any>) => {
+        state.switchPlayer = 'basic';
         state.search = false;
-        state.player = action.payload.items.map((item: any) => {
+        const items = action.payload.items.map((item: any) => {
           return {
             id: item.id,
             songName: item.name,
@@ -137,31 +156,52 @@ const playerSlice = createSlice({
             img: null,
           };
         });
-        state.currentTrack = state.player[0];
+        state.player.basic = items;
+        state.currentTrack = state.player.basic[0];
+      }
+    );
+    builder.addCase(
+      getArtistAlbumItemThunk.fulfilled,
+      (state, action: PayloadAction<any>) => {
+        state.switchPlayer = 'extra';
+        state.search = false;
+        const items = action.payload.items.map((item: any) => {
+          return {
+            id: item.id,
+            songName: item.name,
+            artist: item.artists[0].name,
+            preview_url: item.preview_url,
+            img: null,
+          };
+        });
+        state.player.extra = items;
+        state.currentTrack = state.player.extra[0];
       }
     );
     builder.addCase(
       getSearchThunk.fulfilled,
       (state, action: PayloadAction<IGetSearch>) => {
+        state.switchPlayer = 'basic';
         state.search = true;
-        state.player = action.payload.tracks.items
-        .filter(item => item.preview_url)
-        .map((item) => {
-          return {
-            id: item.id,
-            preview_url: item.preview_url,
-            songName: item.name,
-            albumName: item.album.name,
-            artist: item.artists[0].name,
-            img: item.album.images[2].url,
-          };
-        });
+        state.player.basic = action.payload.tracks.items
+          .filter((item) => item.preview_url)
+          .map((item) => {
+            return {
+              id: item.id,
+              preview_url: item.preview_url,
+              songName: item.name,
+              albumName: item.album.name,
+              artist: item.artists[0].name,
+              img: item.album.images[2].url,
+            };
+          });
       }
     );
     builder.addCase(
       getPlaylistThunk.fulfilled,
       (state, action: PayloadAction<IGetPlaylistInfo>) => {
-        state.player = action.payload.tracks.items
+        state.switchPlayer = 'basic';
+        state.player.basic = action.payload.tracks.items
           .filter((item) => item.track && item.track.preview_url)
           .map((item) => {
             return {
@@ -179,16 +219,17 @@ const playerSlice = createSlice({
     builder.addCase(
       getTopTracksArtistThunk.fulfilled,
       (state, action: PayloadAction<IGetTopTracksArtist>) => {
-        state.player = action.payload.tracks.map(item => {
+        state.switchPlayer = 'basic';
+        state.player.basic = action.payload.tracks.map((item) => {
           return {
-            id:item.id,
-            preview_url:item.preview_url,
-            songName:item.name,
-            artist:item.artists[0].name,
-            albumName:item.album.name,
-            img:item.album.images[0].url           
-          }
-        })
+            id: item.id,
+            preview_url: item.preview_url,
+            songName: item.name,
+            artist: item.artists[0].name,
+            albumName: item.album.name,
+            img: item.album.images[0].url,
+          };
+        });
         state.loading = false;
       }
     );

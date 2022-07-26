@@ -118,7 +118,7 @@ export const SongsTable: FC<Props> = () => {
     <Table
       className="songsTable"
       columns={columns}
-      dataSource={player}
+      dataSource={player.basic}
       pagination={false}
       rowKey="id"
     />

@@ -6,8 +6,7 @@ import { MusicPlayerContext } from "core/context/PlayerContext";
 import { useParams } from "react-router-dom";
 import { InfoHeader } from "../../components/InfoHeader/InfoHeader";
 import { changeCurrentItem } from "../../InfoSlice";
-import { getAlbumItemThunk } from "modules/Player/playerThunk";
-import {getArtistThunk, getTopTracksArtistThunk,getArtistAlbumsThunk} from '../../InfoThunk';
+import {getArtistThunk, getTopTracksArtistThunk,getArtistAlbumsThunk,getArtistAlbumItemThunk} from '../../InfoThunk';
 import Cards from 'common/components/Cards/CardsContainer';
 
 type Props = {};
@@ -31,6 +30,7 @@ export const InfoArtist:FC<Props> = (props) => {
 
   const handlePlayer = (id:string) =>{
     dispatch(changeCurrentItem(id))
+    dispatch(getArtistAlbumItemThunk({token,id}))
     setPlaying(true)
   }
 

@@ -14,5 +14,5 @@ export const getTopTracksArtist = (data:{token:string,id:string}) => {
 }
 
 export const getArtistAlbums = (data:{token:string,id:string, offset:number}) => {
-    return get(`artists/${data.id}/albums?include_groups=album%2Cappears_on&market=ES&limit=6&offset=${data.offset}`,data.token)
+    return get(`artists/${data.id}/albums?market=ES&limit=6&offset=${data.offset}`,data.token)
 }
