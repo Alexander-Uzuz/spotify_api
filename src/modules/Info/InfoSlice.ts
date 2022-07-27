@@ -1,8 +1,9 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import {getPlaylistThunk, getArtistThunk, getArtistAlbumsThunk} from './InfoThunk';
+import {getPlaylistThunk, getArtistThunk, getArtistAlbumsThunk, getAlbumThunk} from './InfoThunk';
 import {IGetPlaylistInfo} from './interfaces/IGetPlaylist'
 import { IGetArtist } from "./interfaces/IGetArtist";
 import { IGetAlbums } from "./interfaces/IGetAlbums";
+import { IGetAlbum } from "./interfaces/IGetAlbum";
 import { IInitialState } from "./interfaces/IInitialState";
 
 const initialState:IInitialState = {
@@ -13,6 +14,7 @@ const initialState:IInitialState = {
     currentItemId:'',
     offset:0,
     total:0,
+    artistId:'',
     albums:[],
     error:null,
     loading:false,
@@ -40,9 +42,19 @@ const infoSlice = createSlice({
         builder.addCase(getArtistAlbumsThunk .pending, (state => {
             state.error = null;
             state.loading = true;
-
+        }))
+        builder.addCase(getAlbumThunk .pending, (state => {
+            state.error = null;
+            state.loading = true;
         }))
 
+        builder.addCase(getAlbumThunk.fulfilled, ((state,action:PayloadAction<IGetAlbum>) => {
+            state.artistId = action.payload.artists[0].id;
+            state.loading = false;
+            state.title = action.payload.name;
+            state.subtitle = `${action.payload.artists[0].name} - ${action.payload.name} - ${action.payload.release_date.slice(0,4)} - ${action.payload.total_tracks} треков`
+            state.img = action.payload.images[0].url;
+        }))
         builder.addCase(getPlaylistThunk.fulfilled, ((state,action:PayloadAction<IGetPlaylistInfo>) => {
             state.loading = false;
             state.title = action.payload.name;
@@ -57,8 +69,8 @@ const infoSlice = createSlice({
             state.img = action.payload.images[0].url;
         }))
         builder.addCase(getArtistAlbumsThunk.fulfilled, ((state,action:PayloadAction<IGetAlbums>) => {
+            state.loading = false;
             state.total = action.payload.total;
-            state.offset = state.offset + 6;
             state.albums = action.payload.items.map(item => {
                 return {
                     id:item.id,

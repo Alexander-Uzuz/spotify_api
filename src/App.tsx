@@ -5,8 +5,9 @@ import  Library  from "./modules/Library/LibraryContainer";
 import { Wrapper } from "./common/components/Wrapper/Wrapper";
 import { RequireAuth } from "./common/hooks/authProvider";
 import {InfoPlaylist} from './modules/Info/pages/InfoPlaylist/InfoPlaylist';
-import { Search } from "./modules/Search/Search";
 import { InfoArtist } from "modules/Info/pages/InfoArtist/InfoArtist";
+import { InfoAlbum } from "modules/Info/pages/InfoAlbum/InfoAlbum";
+import { Search } from "./modules/Search/Search";
 
 import  Genre  from "modules/Genre/GenreContainer";
 import "./App.scss";
@@ -26,6 +27,7 @@ export const App:FC = () => {
             <Route path="/genre/:id" element={<Genre />} />
             <Route path="playlist/:id" element={<InfoPlaylist/>}/>
             <Route path="/artist/:id" element={<InfoArtist/>}/>
+            <Route path="/album/:id" element={<InfoAlbum/>}/>
           </Route>
         </Route>
       </Routes>

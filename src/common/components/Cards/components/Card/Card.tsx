@@ -38,6 +38,7 @@ const CardComponentInner: FC<Props> = ({
       }
     }else{
       navigate(`/${type}/${card.id}`)
+      document.body.scrollTop = document.documentElement.scrollTop = 0;
     }
   }
 

@@ -29,8 +29,9 @@ export const InfoArtist:FC<Props> = (props) => {
   }, []);
 
   const handlePlayer = (id:string) =>{
+    const img = albums.find(item => item.id === id)?.img;
     dispatch(changeCurrentItem(id))
-    dispatch(getArtistAlbumItemThunk({token,id}))
+    dispatch(getArtistAlbumItemThunk({token,id, img: img ? img : ''}))
     setPlaying(true)
   }
 
@@ -49,6 +50,7 @@ export const InfoArtist:FC<Props> = (props) => {
           playlist={albums}
           currentItemId={currentItemId}
           handlePlayer={handlePlayer}
+          type="album"
           />
         </div>
       ) : (

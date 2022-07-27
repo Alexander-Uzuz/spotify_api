@@ -16,3 +16,7 @@ export const getTopTracksArtist = (data:{token:string,id:string}) => {
 export const getArtistAlbums = (data:{token:string,id:string, offset:number}) => {
     return get(`artists/${data.id}/albums?market=ES&limit=6&offset=${data.offset}`,data.token)
 }
+
+export const getAlbum = (data:{token:string,id:string}) => {
+    return get(`albums/${data.id}`,data.token)
+}

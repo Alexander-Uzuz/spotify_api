@@ -35,12 +35,18 @@ export const getArtistItemThunk = createAsyncThunk(
 
 export const getAlbumItemThunk = createAsyncThunk(
     'player/getAlbumItem',
-    async function(data:{token:string | null,id:string}, {rejectWithValue}){
+    async function(data:{token:string | null,id:string, img:string}, {rejectWithValue}){
         if(typeof data.token === 'string'){
             try{
-                const response = await getAlbumsItem(data);
+                const {img,...rest} = data
 
-                return response;
+
+                const response = await getAlbumsItem(rest);
+
+                return {
+                    ...response,
+                    imgAlbum:img
+                };
 
             }catch(err:any){
                 return rejectWithValue(err.message);

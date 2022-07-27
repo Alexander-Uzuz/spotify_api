@@ -9,10 +9,11 @@ import { ISearchDataItem } from "modules/Search/interfaces/IInitialState";
 import "./SongsTable.scss";
 
 type Props = {
-  
+  flag?:boolean
 };
 
-export const SongsTable: FC<Props> = () => {
+export const SongsTable: FC<Props> = (props) => {
+  const {flag} = props;
   const { player, currentTrack } = useAppSelector((state) => state.player);
   const { playing, setPlaying } = useContext(MusicPlayerContext);
   const dispatch = useAppDispatch();
@@ -112,12 +113,12 @@ export const SongsTable: FC<Props> = () => {
         );
       },
     },
-  ];
+  ]
 
   return (
     <Table
       className="songsTable"
-      columns={columns}
+      columns={!flag ? columns : columns.filter(item => item.title !== "Альбом")}
       dataSource={player.basic}
       pagination={false}
       rowKey="id"

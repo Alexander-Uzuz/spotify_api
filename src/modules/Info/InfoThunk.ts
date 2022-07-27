@@ -1,6 +1,19 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import {getPlaylist, getArtist, getArtistAlbums, getTopTracksArtist} from "api/info/infoRequest";
+import {getPlaylist, getArtist, getArtistAlbums, getTopTracksArtist,getAlbum} from "api/info/infoRequest";
 import { getAlbumsItem } from "api/lib/libRequest";
+
+export const getAlbumThunk = createAsyncThunk(
+    'info/getAlbum',
+    async function(data:{token:string, id:string},{rejectWithValue}){
+            try{
+                const response = await getAlbum(data);
+    
+                return response;
+            }catch(err:any){
+                return rejectWithValue(err.message)
+            }
+        }  
+);
 
 export const getArtistAlbumsThunk = createAsyncThunk(
     'info/getArtistAlbums',
@@ -17,12 +30,16 @@ export const getArtistAlbumsThunk = createAsyncThunk(
 
 export const getArtistAlbumItemThunk = createAsyncThunk(
     'lib/getArtistAlbumItem',
-    async function(data:{token:string | null,id:string}, {rejectWithValue}){
+    async function(data:{token:string | null,id:string, img:string}, {rejectWithValue}){
         if(typeof data.token === 'string'){
             try{
-                const response = await getAlbumsItem(data);
+                const {img, ...rest} = data
+                const response = await getAlbumsItem(rest);
 
-                return response;
+                return {
+                    ...response,
+                    imgAlbum:img
+                };
 
             }catch(err:any){
                 return rejectWithValue(err.message);

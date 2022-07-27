@@ -50,6 +50,7 @@ const LibraryContainer: FC<Props> = () => {
   }, [pathname]);
 
   const handlePlayer = (id: string) => {
+
     dispatch(changeCurrentItem(id));
     const data = { token, id };
 
@@ -60,7 +61,8 @@ const LibraryContainer: FC<Props> = () => {
       dispatch(getArtistItemThunk(data));
     }
     if (flag === "album") {
-      dispatch(getAlbumItemThunk(data));
+      const currentAlbum = playlist.find(item => item.id === id);
+      dispatch(getAlbumItemThunk({...data,img:currentAlbum?.img ? currentAlbum.img : ''}));
     }
     setPlaying(true);
   }
