@@ -15,6 +15,7 @@ const initialState:IInitialState = {
     offset:0,
     total:0,
     artistId:'',
+    albumId:'',
     albums:[],
     error:null,
     loading:false,
@@ -49,6 +50,7 @@ const infoSlice = createSlice({
         }))
 
         builder.addCase(getAlbumThunk.fulfilled, ((state,action:PayloadAction<IGetAlbum>) => {
+            state.albumId = action.payload.id;
             state.artistId = action.payload.artists[0].id;
             state.loading = false;
             state.title = action.payload.name;
@@ -77,7 +79,7 @@ const infoSlice = createSlice({
                     img:item.images[0].url,
                     name:item.name
                 }
-            })
+            }).filter(item => item.id !== state.albumId)
         }))
 
 

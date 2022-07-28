@@ -26,7 +26,7 @@ export const Sidebar: FC<Props> = (props) => {
   
 
   return (
-    <div>
+    <div className="sidebar__container">
       <NavLink to="/home">
         <img
           src={Logo}

@@ -7,6 +7,7 @@ export interface IInitialState  {
     total:number;
     currentItemId:string;
     artistId:string;
+    albumId:string;
     albums:IAlbum[],
     error:null | string,
     loading:boolean,
