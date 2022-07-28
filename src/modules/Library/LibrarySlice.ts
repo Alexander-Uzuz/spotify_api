@@ -64,7 +64,7 @@ const libSlice = createSlice({
                 return {
                     id:item.id,
                     name:item.name,
-                    img:item.images[0].url
+                    img:item.images[0]?.url
                 }
             })
             state.loading = false;

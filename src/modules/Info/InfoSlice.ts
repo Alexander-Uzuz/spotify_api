@@ -21,6 +21,16 @@ const initialState:IInitialState = {
     loading:false,
 };
 
+const setPending = (state:IInitialState) => {
+    state.error = null;
+    state.loading = true;
+}
+
+const setRejected = (state:IInitialState, action:PayloadAction<any>) =>{
+    state.error = action.payload;
+    state.loading = false;
+}
+
 
 const infoSlice = createSlice({
     name:'info',
@@ -32,22 +42,10 @@ const infoSlice = createSlice({
     },
     extraReducers:(builder) =>{
 
-        builder.addCase(getPlaylistThunk .pending, (state => {
-            state.error = null;
-            state.loading = true;
-        }))
-        builder.addCase(getArtistThunk .pending, (state => {
-            state.error = null;
-            state.loading = true;
-        }))
-        builder.addCase(getArtistAlbumsThunk .pending, (state => {
-            state.error = null;
-            state.loading = true;
-        }))
-        builder.addCase(getAlbumThunk .pending, (state => {
-            state.error = null;
-            state.loading = true;
-        }))
+        builder.addCase(getPlaylistThunk .pending, setPending)
+        builder.addCase(getArtistThunk .pending, setPending)
+        builder.addCase(getArtistAlbumsThunk .pending, setPending)
+        builder.addCase(getAlbumThunk .pending, setPending)
 
         builder.addCase(getAlbumThunk.fulfilled, ((state,action:PayloadAction<IGetAlbum>) => {
             state.albumId = action.payload.id;
@@ -83,19 +81,9 @@ const infoSlice = createSlice({
         }))
 
 
-        builder.addCase(getPlaylistThunk.rejected, (state, action:PayloadAction<any>) => {
-            state.error = action.payload;
-            state.loading = false;
-        })
-        builder.addCase(getArtistThunk .rejected, (state, action:PayloadAction<any>) => {
-            state.error = action.payload;
-            state.loading = false;
-        })
-        builder.addCase(getArtistAlbumsThunk .rejected, (state, action:PayloadAction<any>) => {
-            state.error = action.payload;
-            state.loading = false;
-        })
-
+        builder.addCase(getPlaylistThunk.rejected, setRejected)
+        builder.addCase(getArtistThunk .rejected, setRejected)
+        builder.addCase(getArtistAlbumsThunk .rejected, setRejected)
     }
 })
 
