@@ -32,7 +32,7 @@ export const SongsTable: FC<Props> = (props) => {
       dataIndex: "key",
       key: "1",
       render: (_, data, index) => (
-        <div>
+        <div key={index}>
           <p
             style={{
               width: "30px",

@@ -6,6 +6,7 @@ export interface IInitialState  {
     offset:number;
     total:number;
     currentItemId:string;
+    checkFollow:boolean;
     artistId:string;
     albumId:string;
     albums:IAlbum[],

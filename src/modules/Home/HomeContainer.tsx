@@ -40,10 +40,10 @@ const HomeContainer: FC<Props> = (props) => {
   }, [_error]);
 
   useEffect(() => {
-    if (user.id) {
+    if (token) {
       dispatch(getFeaturedPlaylistsThunk({ token, offset }));
     }
-  }, [user.id]);
+  }, [token]);
 
   useEffect(() => {
     if (error) {

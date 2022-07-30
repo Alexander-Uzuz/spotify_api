@@ -26,5 +26,5 @@ export const InfoAlbum: FC<Props> = (props) => {
     dispatch(getArtistAlbumItemThunk({ token, id, img: img ? img : "" }));
     setPlaying(true);
   };
-  return <InfoPage handleDispatch={getAlbum} handlePlayer={handlePlayer} handleExtraDispatch={getArtistAlbums}/>
+  return <InfoPage handleDispatch={getAlbum} handlePlayer={handlePlayer} handleExtraDispatch={getArtistAlbums} type="album"/>
 };

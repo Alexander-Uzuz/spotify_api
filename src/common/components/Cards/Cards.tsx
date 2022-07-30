@@ -3,27 +3,35 @@ import { Typography, List, Spin } from "antd";
 import { CardComponent } from "common/components/Cards/components/Card/Card";
 import { ReactComponent as SpinnerLogo } from "assets/icons/spinner.svg";
 
-
 type Props = {
-    loading:boolean;
-    title?:string;
-    playlist: {
-        id: string;
-        img: string;
-        name: string;
-        description?: string | undefined;
-      }[];
-    handlePlay:(id:string, flag?:boolean) => void;
-    playing:boolean;
-    setPlaying:React.Dispatch<React.SetStateAction<boolean>>
-    currentItemId:string;
-    type?:'playlist' | 'artist' | 'album'
+  loading: boolean;
+  title?: string;
+  playlist: {
+    id: string;
+    img: string;
+    name: string;
+    description?: string | undefined;
+  }[];
+  handlePlay: (id: string, flag?: boolean) => void;
+  playing: boolean;
+  setPlaying: React.Dispatch<React.SetStateAction<boolean>>;
+  currentItemId: string;
+  type?: "playlist" | "artist" | "album";
 };
 
 const { Title } = Typography;
 
-const CardsInner:FC<Props> = (props) => {
-    const {loading,title,playlist,handlePlay,currentItemId, playing, setPlaying,type} = props;
+const CardsInner: FC<Props> = (props) => {
+  const {
+    loading,
+    title,
+    playlist,
+    handlePlay,
+    currentItemId,
+    playing,
+    setPlaying,
+    type,
+  } = props;
 
   return (
     <div className="block">
@@ -46,6 +54,7 @@ const CardsInner:FC<Props> = (props) => {
             renderItem={(item) => (
               <List.Item key={item.id}>
                 <CardComponent
+                  key={item.id}
                   card={item}
                   playing={playing}
                   setPlaying={setPlaying}

@@ -54,6 +54,7 @@ const homeSlice = createSlice({
         }))
 
         builder.addCase(getFeaturedPlaylistsThunk .rejected, (state, action:PayloadAction<any>) => {
+            state.featuredPlaylist = [];
             state.error = action.payload;
             state.loading = false;
         })

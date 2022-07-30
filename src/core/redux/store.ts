@@ -1,8 +1,19 @@
-import {configureStore} from '@reduxjs/toolkit';
+import {configureStore, PreloadedState} from '@reduxjs/toolkit';
 import { rootReducer } from './rootReducer';
 
+const preloadedUserState = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user') || '') : {username:null,avatarUrl:null,id:null};
 
-const preloadedState:any = {
+const preloadedState:PreloadedState<any> = {
+    signIn:{
+        signInCards:[],
+        user:{
+            username:preloadedUserState.name,
+            id:preloadedUserState.id,
+            avatarUrl:preloadedUserState.avatarUrl
+        },
+        _error:null,
+        loading:false
+    },
     player:{
         player:{
             basic:[localStorage.getItem('currentTrack') ? [JSON.parse(localStorage.getItem('currentTrack') || '')] : []],

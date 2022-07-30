@@ -1,0 +1,24 @@
+.settings{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 30px;
+    height: 13px;
+    cursor: pointer;
+    span{
+      display: block;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background-color: beige;
+    }
+  }
+
+.ant-dropdown-menu-item{
+  color:var(--color-white) !important;
+}
+
+.ant-dropdown-menu-item.ant-dropdown-menu-item-active{
+  background: none !important;
+}
+
