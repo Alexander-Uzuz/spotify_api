@@ -36,6 +36,7 @@ const HomeContainer: FC<Props> = (props) => {
       })();
     } else {
       localStorage.removeItem("token");
+      window.location.reload();
     }
   }, [_error]);
 
