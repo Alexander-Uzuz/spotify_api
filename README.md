@@ -1,3 +1,8 @@
+![Иллюстрация к проекту] (https://github.com/Alexander-Uzuz/spotify_api/blob/master/src/assets/screensApp/Screenshot_1.png)
+![Иллюстрация к проекту] (https://github.com/Alexander-Uzuz/spotify_api/blob/master/src/assets/screensApp/Screenshot_2.png)
+![Иллюстрация к проекту] (https://github.com/Alexander-Uzuz/spotify_api/blob/master/src/assets/screensApp/Screenshot_3.png)
+![Иллюстрация к проекту] (https://github.com/Alexander-Uzuz/spotify_api/blob/master/src/assets/screensApp/Screenshot_4.png)
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
